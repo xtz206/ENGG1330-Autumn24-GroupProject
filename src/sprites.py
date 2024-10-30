@@ -76,6 +76,9 @@ class Chaser(MovableSprite):
         dy, dx = 0, 0
         super().move(dy, dx)
     
+    def check_lose(self):
+        return (self.y, self.x) == (self.player.y, self.player.x)
+    
     def draw(self):
         block = self.blocks[0]
         block.draw(self.win, self.y, self.x)
