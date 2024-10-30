@@ -1,6 +1,8 @@
 import curses
 import json
+
 import blocks
+import display
 
 class Loader:
     def __init__(self, path):
@@ -11,6 +13,16 @@ class Loader:
     def load(self):
         raise NotImplementedError
 
+
+class MenuLoader(Loader):
+    def get_basic_info(self):
+        return self.data["height"], self.data["width"]
+
+    def get_resource_info(self):
+        texts = []
+        for text in self.data["texts"]:
+            texts.append(display.Text(**text))
+        return texts
 
 class ColorLoader(Loader):
     def load(self):
@@ -31,10 +43,8 @@ class ColorLoader(Loader):
 
 class BlockLoader(Loader):
     def load(self):
-        
         keys = self.data["default"].keys()
         default_data = self.data["default"]
-
         for block_data in self.data["blocks"]:
             block_info = {key: block_data.get(key, default_data.get(key)) for key in keys}
             blocks.Block(**block_info)
