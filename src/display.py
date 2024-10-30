@@ -1,10 +1,19 @@
 import curses
 
 class Text:
-    def __init__(self, content, align, color):
+    def __init__(self, content, line, align, indent, color):
         self.content = content
+        self.line = line
         self.align = align
+        self.indent = indent
         self.color = color
+
+    def draw(self, win):
+        height, width = win.getmaxyx()
+        y = self.line
+        x = ((width - len(self.content)) // 2 if self.align else 0) + self.indent
+        win.addstr(y, x, self.content, curses.color_pair(self.color))
+
 
 class Displayer:
     def __init__(self, screen):
@@ -28,17 +37,8 @@ class Displayer:
 
     def display_start(self, texts):
         self.win.erase()
-        height, width = self.win.getmaxyx()
-        for index, text in enumerate(texts):
-            content = text.content
-            align = text.align
-            color = curses.color_pair(text.color)
-
-            if align == 0:
-                y = index
-                x = (width - len(content)) // 2
-                self.win.addstr(y, x, content)
-
+        for text in texts:
+            text.draw(self.win)
         self.win.refresh()
 
 
