@@ -71,17 +71,31 @@ def main(stdscr):
         elif key == ord('d'):
             player.move(0, 1)
         
-        # TODO: End Check
-        # if player.check_win():
-        #     # TODO: Display the winning pictures
-        #     pass
-        # elif player.check_lose():
-        #     # TODO: Display the losing pictures
-        #     pass
-
+        # End Check
+        if player.check_win():
+            player_status = "win"
+            break
 
         # Display
         displayer.display_game(displaying_sprites)
+
+
+    # End Menu
+    menu_loader.set_index(player_status)
+    win = displayer.create_win(*menu_loader.get_basic_info())
+    displayer.display_start(menu_loader.get_resource_info())
+
+    while True:
+            
+            # Keyboard Input
+            key = stdscr.getch()
+
+            # Exit Game
+            if key == ord('q'):
+                return
+
+            # Display
+            displayer.display_start(menu_loader.get_resource_info())
 
 curses.wrapper(main)
 
