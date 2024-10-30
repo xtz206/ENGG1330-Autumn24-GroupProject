@@ -1,6 +1,6 @@
-def log_to_file(msg):
+def log_to_file(*msgs, sep=" ", end="\n"):
     with open("./logs.txt", 'a') as f:
-        f.write(msg + '\n')
+        f.write(sep.join([format(msg) for msg in msgs]) + end)
 
 def json_format(path):
     import json
