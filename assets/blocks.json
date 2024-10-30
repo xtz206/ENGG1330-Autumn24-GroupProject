@@ -35,7 +35,29 @@
             "name": "exit",
             "char": "E",
             "color": 3
+        },
+        {
+            "name":"bonus",
+            "char":"$",
+            "color":4
+        },
+        {
+            "name":"chaser",
+            "char":" "
+        },
+        {
+            "name":"fixed_chaser_end"
+        },
+        {
+            "name":"fixed_chaser_start"
+        },
+        {
+            "name":"movable_block",
+            "char":"M",
+            "color":5
         }
     ],
-    "unused": []
+    "unused": [
+
+    ]
 }
