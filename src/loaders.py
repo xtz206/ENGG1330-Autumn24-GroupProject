@@ -66,7 +66,7 @@ class MazeLoader(MultiLoader):
 
     def get_resource_info(self):
         maze_data = self.data[self.index]
-        start = tuple(maze_data["start"])
+        start = maze_data["start"]
         end = tuple(maze_data["end"])
         block_names = maze_data["block_names"]
         return {
