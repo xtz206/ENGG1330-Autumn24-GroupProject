@@ -39,11 +39,12 @@
         {
             "name":"bonus",
             "char":"$",
-            "color":4
+            "color":3
         },
         {
             "name":"chaser",
-            "char":" "
+            "char":"*",
+            "color":4
         },
         {
             "name":"fixed_chaser_end"
