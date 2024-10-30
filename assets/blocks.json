@@ -1,8 +1,11 @@
-{   
-    "default" : {
+{
+    "default": {
         "name": "default",
         "char": " ",
-        "size": [1, 1],
+        "size": [
+            1,
+            1
+        ],
         "color": 1,
         "is_solid": false,
         "is_bonus": false,
@@ -34,7 +37,5 @@
             "color": 3
         }
     ],
-    "unused": [
-
-    ]
+    "unused": []
 }
