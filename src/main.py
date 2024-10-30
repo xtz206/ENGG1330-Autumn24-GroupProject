@@ -15,23 +15,41 @@ def main(stdscr):
     maze_loader.set_index(0)
     maze_height, maze_width = maze_loader.get_basic_info()
 
-    # Window and Displayer Initiliazation
+    # Displayer Initiliazation
     displayer = display.Displayer(stdscr)
     curses.curs_set(0)
-    game_win = displayer.create_win("game", maze_height, maze_width, blocks.get_block_size())
 
+
+    # Start Menu
+    win = displayer.create_win(7, 20)
+    displayer.display_start()
+    
+    while True:
+            
+            # Keyboard Input
+            key = stdscr.getch()
+
+            # Exit Game
+            if key == ord('q'):
+                return
+            
+            # Start Game
+            elif key == ord('1'):
+                win.erase()
+                win.refresh()
+                break
+
+            # Display
+            displayer.display_start()
 
     # Sprites Initialization
-    maze = sprites.Maze(game_win, maze_height, maze_width, **maze_loader.get_resource_info())
-    player = sprites.Player(game_win, maze_height, maze_width, [blocks.get_block("player")], maze)
+    win = displayer.create_win(maze_height, maze_width, blocks.get_block_size())
+    maze = sprites.Maze(win, maze_height, maze_width, **maze_loader.get_resource_info())
+    player = sprites.Player(win, maze_height, maze_width, [blocks.get_block("player")], maze)
     displaying_sprites = [maze, player]
-    
-    # TODO: The start menu
-
-
-    # Game Main Loop
     displayer.display_game(displaying_sprites)
 
+    # Game Loop
     while True:
 
         # Keyboard Input
@@ -39,7 +57,7 @@ def main(stdscr):
         
         # Exit Game
         if key == ord('q'):
-            break
+            return
 
         # Moving
         elif key == ord('w'):
@@ -64,3 +82,4 @@ def main(stdscr):
         displayer.display_game(displaying_sprites)
 
 curses.wrapper(main)
+
