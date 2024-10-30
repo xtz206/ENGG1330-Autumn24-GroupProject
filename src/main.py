@@ -16,10 +16,9 @@ def main(stdscr):
     color_loader.load()
     block_loader.load()
 
-    # Displayer Initiliazation
+    # Displayer Initialization
     displayer = display.Displayer(stdscr)
     curses.curs_set(0)
-
 
     # Start Menu
     win = displayer.create_win(7, 20)
