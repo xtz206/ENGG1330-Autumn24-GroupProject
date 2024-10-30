@@ -58,7 +58,7 @@ def main(stdscr):
     win = displayer.create_win(maze_height, maze_width, blocks.get_block_size())
     maze = sprites.Maze(win, maze_height, maze_width, **maze_loader.get_resource_info())
     player = sprites.Player(win, maze_height, maze_width, [blocks.get_block("player")], maze)
-    chaser = sprites.Chaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze)
+    chaser = sprites.Chaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, player)
     displaying_sprites = [maze, player, chaser]
     displayer.display_game(displaying_sprites)
 
@@ -85,6 +85,9 @@ def main(stdscr):
         # End Check
         if player.check_win():
             player_status = "win"
+            break
+        elif chaser.check_lose():
+            player_status = "lose"
             break
 
         # Display
