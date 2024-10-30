@@ -1,0 +1,32 @@
+[
+    {
+        "height": 4,
+        "width": 5,
+        "size": [
+            2,
+            3
+        ],
+        "blocks": [
+            "wall",
+            "air",
+            "wall",
+            "wall",
+            "wall",
+            "air",
+            "air",
+            "wall",
+            "air",
+            "wall",
+            "air",
+            "wall",
+            "wall",
+            "air",
+            "wall",
+            "air",
+            "air",
+            "air",
+            "air",
+            "air"
+        ]
+    }
+]
