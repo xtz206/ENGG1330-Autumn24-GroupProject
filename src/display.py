@@ -1,5 +1,11 @@
 import curses
 
+class Text:
+    def __init__(self, content, align, color):
+        self.content = content
+        self.align = align
+        self.color = color
+
 class Displayer:
     def __init__(self, screen):
         self.screen = screen
