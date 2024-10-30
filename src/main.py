@@ -21,9 +21,9 @@ def main(stdscr):
     curses.curs_set(0)
 
     # Start Menu
-    win = displayer.create_win(7, 20)
-    displayer.display_start()
-    
+    win = displayer.create_win(*menu_loader.get_basic_info())
+    displayer.display_start(menu_loader.get_resource_info())
+
     while True:
             
             # Keyboard Input
@@ -40,9 +40,11 @@ def main(stdscr):
                 break
 
             # Display
-            displayer.display_start()
+            displayer.display_start(menu_loader.get_resource_info())
 
     # Sprites Initialization
+    maze_loader.set_index(0)
+    maze_height, maze_width = maze_loader.get_basic_info()
     win = displayer.create_win(maze_height, maze_width, blocks.get_block_size())
     maze = sprites.Maze(win, maze_height, maze_width, **maze_loader.get_resource_info())
     player = sprites.Player(win, maze_height, maze_width, [blocks.get_block("player")], maze)
@@ -82,4 +84,5 @@ def main(stdscr):
         displayer.display_game(displaying_sprites)
 
 curses.wrapper(main)
+
 
