@@ -26,8 +26,19 @@ class Displayer:
             displaying_sprite.draw()
         self.win.refresh()
 
-    def display_start(self):
+    def display_start(self, texts):
         self.win.erase()
-        self.win.addstr("Welcome to Our Game", curses.A_BOLD)
+        height, width = self.win.getmaxyx()
+        for index, text in enumerate(texts):
+            content = text.content
+            align = text.align
+            color = curses.color_pair(text.color)
+
+            if align == 0:
+                y = index
+                x = (width - len(content)) // 2
+                self.win.addstr(y, x, content)
+
         self.win.refresh()
+
 
