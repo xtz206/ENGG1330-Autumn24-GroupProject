@@ -3,3 +3,5 @@
 .config/
 __pycache__/
 packages/
+.bash_history
+.viminfo
