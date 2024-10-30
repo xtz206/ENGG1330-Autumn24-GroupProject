@@ -31,7 +31,27 @@
         "width": 30,
         "texts": [
             {
-                "content": "SOME TITLE TEXTS",
+                "content": "SOME WINNER TEXTS",
+                "line": 1,
+                "align": true,
+                "indent": 0,
+                "color": 0
+            },
+            {
+                "content": "[Q]    Quit",
+                "line": 4,
+                "align": true,
+                "indent": 0,
+                "color": 0
+            }
+        ]
+    },
+    "lose": {
+        "height": 10,
+        "width": 30,
+        "texts": [
+            {
+                "content": "SOME LOSER TEXTS",
                 "line": 1,
                 "align": true,
                 "indent": 0,
@@ -46,5 +66,4 @@
             }
         ]
     }
-    
 }
