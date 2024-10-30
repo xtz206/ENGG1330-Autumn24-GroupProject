@@ -6,14 +6,15 @@ import loaders
 import display
 
 def main(stdscr):
-    # Assets Loading
+    # Loaders Initialization
     color_loader = loaders.ColorLoader("assets/colors.json")
-    color_loader.load()
     block_loader = loaders.BlockLoader("assets/blocks.json")
-    block_loader.load()
     maze_loader = loaders.MazeLoader("assets/mazes.json")
-    maze_loader.set_index(0)
-    maze_height, maze_width = maze_loader.get_basic_info()
+    menu_loader = loaders.MenuLoader("assets/menu.json")
+
+    # Assets Initialization
+    color_loader.load()
+    block_loader.load()
 
     # Displayer Initiliazation
     displayer = display.Displayer(stdscr)
