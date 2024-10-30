@@ -1,0 +1,63 @@
+{   
+    "default": {
+        "name": "default",
+        "char": " ",
+        "size": [
+            1, 
+            1
+        ],
+        "color": 1,
+        "is_solid": false,
+        "is_bonus": false,
+        "is_enemy": false
+    },
+    "blocks": [
+        {
+            "name": "air"
+        },
+        {
+            "name": "wall",
+            "char": "#",
+            "color": 2,
+            "is_solid": true
+        },
+        {
+            "name": "player",
+            "char": "@",
+            "color": 3
+        },
+        {
+            "name": "start",
+            "char": " ",
+            "color": 3
+        },
+        {
+            "name": "exit",
+            "char": "E",
+            "color": 3
+        },
+        {
+            "name":"bonus",
+            "char":"$",
+            "color":4
+        },
+        {
+            "name":"chaser",
+            "char":" "
+        },
+        {
+            "name":"fixed_chaser_end"
+        },
+        {
+            "name":"fixed_chaser_start"
+        },
+        {
+            "name":"movable_block",
+            "char":"M",
+            "color":5
+        }
+    ],
+    "unused": [
+
+    ]
+}

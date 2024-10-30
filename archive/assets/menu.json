@@ -1,0 +1,22 @@
+{
+    "height": 10,
+    "width": 30,
+    "texts": [
+        {
+            "content": "BREAK THE MAZE",
+            "align": 0,
+            "color": 5
+        },
+        {
+            "content": "1. Play",
+            "align": 0,
+            "color": 5
+        },
+        {
+            "content": "2. Quit",
+            "align": 0,
+            "color": 5
+        }
+
+    ]
+}
