@@ -15,12 +15,15 @@ def main(stdscr):
     # Assets Initialization
     color_loader.load()
     block_loader.load()
+    maze_loader.load()
+    menu_loader.load()
 
     # Displayer Initialization
     displayer = display.Displayer(stdscr)
     curses.curs_set(0)
 
     # Start Menu
+    menu_loader.set_index("start")
     win = displayer.create_win(*menu_loader.get_basic_info())
     displayer.display_start(menu_loader.get_resource_info())
 
@@ -34,16 +37,23 @@ def main(stdscr):
                 return
             
             # Start Game
+            elif key == ord('t'):
+                win.erase()
+                win.refresh()
+                maze_index = 0
+                break
+            
             elif key == ord('1'):
                 win.erase()
                 win.refresh()
+                maze_index = 1
                 break
 
             # Display
             displayer.display_start(menu_loader.get_resource_info())
 
     # Sprites Initialization
-    maze_loader.set_index(0)
+    maze_loader.set_index(maze_index)
     maze_height, maze_width = maze_loader.get_basic_info()
     win = displayer.create_win(maze_height, maze_width, blocks.get_block_size())
     maze = sprites.Maze(win, maze_height, maze_width, **maze_loader.get_resource_info())
