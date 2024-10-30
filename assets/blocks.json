@@ -1,10 +1,10 @@
-{
+{   
     "default": {
         "name": "default",
         "char": " ",
         "size": [
-            1,
-            1
+            2, 
+            2
         ],
         "color": 1,
         "is_solid": false,
