@@ -16,23 +16,22 @@ def main(stdscr):
     maze_height, maze_width = maze_loader.get_basic_info()
 
     # Window and Displayer Initiliazation
-    block_size_y, block_size_x = blocks.get_block_size()
-    window_height, window_width = maze_height * block_size_y + 2, maze_width * block_size_x + 2  # + 2 for the space of the border
-    window_origin_y, window_origin_x = (stdscr.getmaxyx()[0] // 2 - window_height // 2) - 1, (stdscr.getmaxyx()[1] // 2 - window_width // 2) - 1
-    win = curses.newwin(window_height, window_width, window_origin_y, window_origin_x)
-    displayer = display.Displayer(win)
+    displayer = display.Displayer(stdscr)
     curses.curs_set(0)
+    game_win = displayer.create_win("game", maze_height, maze_width, blocks.get_block_size())
+
 
     # Sprites Initialization
-    maze = sprites.Maze(win, maze_height, maze_width, **maze_loader.get_resource_info())
-    player = sprites.Player(win, maze_height, maze_width, [blocks.get_block("player")], maze)
+    maze = sprites.Maze(game_win, maze_height, maze_width, **maze_loader.get_resource_info())
+    player = sprites.Player(game_win, maze_height, maze_width, [blocks.get_block("player")], maze)
     displaying_sprites = [maze, player]
-    displayer.display_game(displaying_sprites)
     
     # TODO: The start menu
 
 
     # Game Main Loop
+    displayer.display_game(displaying_sprites)
+
     while True:
 
         # Keyboard Input
