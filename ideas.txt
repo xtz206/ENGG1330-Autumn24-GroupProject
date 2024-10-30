@@ -1,0 +1,83 @@
+人工地图
+设定难度等级 3个
+开始菜单
+
+模式：
+1. 限時/限步數:洪水/熔岩
+2. 生存/逃跑:殭屍 etc.
+3. 雙人:同時開門 etc.
+4. 暗黑模式:ref(Dream Maze Escape)
+
+\Is that too complicated?.wy
+特別功能
+1. 傳送
+2. 充能
+3. 陷阱/機會/道具：減步數/往後走/增加步數/技能 etc.
+4. 可移動迷宮
+5. 
+
+
+
+
+How to play the game:
+main -> collect items to win
+chaser start chasing player after a period of time
+lose if chaser touches player (n times)
+
+Menu of the game:
+1. start
+2. To view high score(least time used?)
+3. changing difficulty
+
+Difficulties:
+easy, normal, hard
+differences ->
+1. movement speed of chaser
+2. change of map(size or difficulty to navigate)
+3. the releasing time of the chaser?
+4. items needed to win the game
+5. limited steps
+6. time limited
+7. number of chasers
+8. how many times getting touched by chaser
+
+Chaser(antagonist) settings:
+movement speed ->
+1. faster than player
+2. slower than player
+3. same speed
+routes ->
+1. shortest path
+2. random
+3. special path according our settings
+number of chaser ->
+1. one for shortest path
+2. mutliple of different path-finding-algorithms
+3. mutliple of special or random
+themes ->
+1. ghost
+2. murderer
+3. monster
+colored ->
+1. red to indicate dangers?
+2. white to represent ghosts?
+3. blue to represent monsters?
+
+Probable stories for the game:
+1. detective to investigate mysterious murderer, (finding evidences) collecting items
+2. getting kidnapped and locked in haunted residency, (escaping) finding keys
+(NOT necessary I guess,maybe add it at the start menu.wy)
+
+Sound effects:
+1. import from internet?
+2. no sound effects
+
+Map design:
+1. air    (Orange)
+2. wall   (Grey)
+3. doors? (brown)
+4. items  (Gold)
+5. player (yellow?)
+6. chaser (To be determined)
+7. traps? (if not enough interesting mechanics)
+

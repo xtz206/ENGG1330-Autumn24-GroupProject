@@ -1,0 +1,20 @@
+suseful tool 
+1. https://www.text-to-speech.cn 
+#use public link for submission
+Points to be menitoned 
+1 min video (trailer:hightlight the games)
+  1. background i.e. Halloween theme, chasing by someone
+  2. objecive of the game 
+  3. little demonstrating
+  4. map function (trap, teleport)
+
+5 mins video (demonstrating gameplay & technical implementation)
+  1. 1 min demonstration
+  2. 4 min technical implementation 
+  displaying 
+  -> how the maze could be modified by altering the lists of dictionaries (i.e. assests)
+  -> how to detect if the player have won
+  -> how does the chaser 'touches' the player
+  -> 
+ 
+
