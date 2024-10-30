@@ -58,7 +58,8 @@ def main(stdscr):
     win = displayer.create_win(maze_height, maze_width, blocks.get_block_size())
     maze = sprites.Maze(win, maze_height, maze_width, **maze_loader.get_resource_info())
     player = sprites.Player(win, maze_height, maze_width, [blocks.get_block("player")], maze)
-    displaying_sprites = [maze, player]
+    chaser = sprites.Chaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze)
+    displaying_sprites = [maze, player, chaser]
     displayer.display_game(displaying_sprites)
 
     # Game Loop
