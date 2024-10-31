@@ -3,14 +3,13 @@ import curses
 class Block:
     blocks = {}
 
-    def __init__(self, name, size, char, color, is_solid, is_bonus, is_enemy):
+    def __init__(self, name, size, char, color, is_solid, is_pushable):
         self.name = name
         self.size = size
         self.char = char
         self.color = color
         self.is_solid = is_solid
-        self.is_bonus = is_bonus
-        self.is_enemy = is_enemy
+        self.is_pushable = is_pushable
         Block.blocks[self.name] = self
     
     def draw(self, win, y, x):
@@ -24,6 +23,7 @@ class Block:
             (y * common_height + i + 1, x * common_width + j + 1) 
             for i in range(block_height) for j in range(block_width)
         ]
+
 
 def get_block(name):
     return Block.blocks[name]
