@@ -1,54 +1,127 @@
 import curses
+
 import blocks
-from spirits import *
-from mazes import *
-
-def init_color(colors):
-    for index, (name, color) in enumerate(colors.items()):
-        curses.init_pair(index + 1, *color)
-        blocks.Block.get_block(name).set_color(curses.color_pair(index + 1))
-
-def render(win, objs):
-    # win.clear()
-    for obj in objs:
-        obj.draw()
-    win.refresh()
+import sprites
+import loaders
+import display
 
 def main(stdscr):
-    # Maze Initialization
-    maze_loader = MazeLoader()
-    maze_info = height, width, size = maze_loader.get_maze_info(0)
-    maze_blocks = maze_loader.get_maze_blocks(0)
+    # Loaders Initialization
+    color_loader = loaders.ColorLoader("assets/colors.json")
+    block_loader = loaders.BlockLoader("assets/blocks.json")
+    maze_loader = loaders.MazeLoader("assets/mazes.json")
+    menu_loader = loaders.MenuLoader("assets/menu.json")
 
-    # Display Initiliazation
-    origin = (stdscr.getmaxyx()[0] - height * size[0]) // 2, (stdscr.getmaxyx()[1] - width * size[1]) // 2
-    win = curses.newwin(height * size[0], width * size[1], *origin)
+    # Assets Initialization
+    color_loader.load()
+    block_loader.load()
+    maze_loader.load()
+    menu_loader.load()
 
-    # Spirits Initialization
-    playground = Playground(win, *maze_info, maze_blocks)
-    player = Player(win, *maze_info)
-    spirits = [playground, player]
-    init_color(blocks.colors)
+    # Displayer Initialization
+    displayer = display.Displayer(stdscr)
+    curses.curs_set(0)
 
-    render(win, spirits)
-    
-    # Game Main Loop
+    # Start Menu
+    menu_loader.set_index("start")
+    win = displayer.create_win(*menu_loader.get_basic_info())
+    displayer.display_start(menu_loader.get_resource_info())
+
+    while True:
+            
+            # Keyboard Input
+            key = stdscr.getch()
+
+            # Exit Game
+            if key == ord('q'):
+                return
+            
+            # Start Game
+            elif key == ord('t'):
+                win.erase()
+                win.refresh()
+                maze_index = 0
+                break
+            
+            elif ord('1') <= key <= ord('9'):
+                win.erase()
+                win.refresh()
+                maze_index = int(chr(key))
+                break
+
+            # Display
+            displayer.display_start(menu_loader.get_resource_info())
+
+    # Sprites Initialization
+    maze_loader.set_index(maze_index)
+    maze_height, maze_width = maze_loader.get_basic_info()
+    win = displayer.create_win(maze_height, maze_width, blocks.get_block_size())
+    maze = sprites.Maze(win, maze_height, maze_width, **maze_loader.get_resource_info())
+    player = sprites.Player(win, maze_height, maze_width, [blocks.get_block("player")], maze)
+    chasers = []
+    for name, route in maze_loader.get_route_info().items():
+        if name == "auto":
+            chasers.append(sprites.AutoChaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, route, player))
+        else:
+            chasers.append(sprites.FixedChaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, route))
+    displaying_sprites = [maze, player] + chasers
+    displayer.display_game(displaying_sprites)
+
+    # Game Loop
     while True:
 
         # Keyboard Input
         key = stdscr.getch()
-        if key == ord('q'):     # EXIT GAME
-            break
-        elif key == ord('w'):
-            player.move(-1, 0)
-        elif key == ord('a'):
-            player.move(0, -1)
-        elif key == ord('s'):
-            player.move(1, 0)
-        elif key == ord('d'):
-            player.move(0, 1)
         
+        if key == ord('q'):
+            return
+        elif key == ord('w'):
+            player_dy, player_dx = -1, 0
+        elif key == ord('s'):
+            player_dy, player_dx = 1, 0
+        elif key == ord('a'):
+            player_dy, player_dx = 0, -1
+        elif key == ord('d'):
+            player_dy, player_dx = 0, 1
+        else:
+            player_dy, player_dx = 0, 0
+        
+        # Move
+        if player.move(player_dy, player_dx):          
+            for chaser in chasers:
+                chaser.move()
+        
+        # Checks
+        player.check_bonus()
+        if player.check_win():
+            player_status = "win"
+            break
+        
+        elif player.check_lose(chasers):
+            player_status = "lose"
+            break
+
         # Display
-        render(win, spirits)
+        displayer.display_game(displaying_sprites)
+
+
+    # End Menu
+    menu_loader.set_index(player_status)
+    win = displayer.create_win(*menu_loader.get_basic_info())
+    displayer.display_end(menu_loader.get_resource_info(), (player.step, player.score))
+
+    while True:
+            
+            # Keyboard Input
+            key = stdscr.getch()
+
+            # Exit Game
+            if key == ord('q'):
+                return
+
+            # Display
+            displayer.display_end(menu_loader.get_resource_info(), results)
 
 curses.wrapper(main)
+
+

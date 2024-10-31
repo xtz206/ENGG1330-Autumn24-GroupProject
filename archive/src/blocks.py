@@ -1,35 +1,38 @@
 import curses
 
 class Block:
-    blocks = {} # all kinds of blocks 
+    blocks = {}
 
-    def __init__(self, name, char=" "):
+    def __init__(self, name, size, char, color, is_solid, is_pushable):
         self.name = name
+        self.size = size
         self.char = char
-        self.color = None
-        Block.blocks[self.name] = self
-
-    def get_char(self):
-        return self.char
-
-    def set_color(self, color):
         self.color = color
+        self.is_solid = is_solid
+        self.is_pushable = is_pushable
+        Block.blocks[self.name] = self
+    
+    def draw(self, win, y, x):
+        for window_y, window_x in self.transform(y, x):
+            win.addch(window_y, window_x, self.char, curses.color_pair(self.color))
 
-    def get_color(self):
-        if self.color is None:
-            raise ValueError("Must Set Color First")
-        return self.color
+    def transform(self, y, x):
+        common_height, common_width = get_block_size()
+        block_height, block_width = self.size
+        return [
+            (y * common_height + i + 1, x * common_width + j + 1) 
+            for i in range(block_height) for j in range(block_width)
+        ]
 
-    @staticmethod
-    def get_block(name):
-        return Block.blocks[name]
 
-colors = {
-    "air": (curses.COLOR_BLACK, curses.COLOR_WHITE),
-    "wall": (curses.COLOR_BLACK, curses.COLOR_YELLOW),
-    "player" : (curses.COLOR_GREEN, curses.COLOR_WHITE)
-}
+def get_block(name):
+    return Block.blocks[name]
 
-air = Block("air")
-wall = Block("wall")
-player = Block("player", "@")
+def get_block_size():
+    max_size_y = max_size_x = 0
+    for block in Block.blocks.values():
+        max_size_y = max(max_size_y, block.size[0])
+        max_size_x = max(max_size_x, block.size[1])
+    return max_size_y, max_size_x
+
+
