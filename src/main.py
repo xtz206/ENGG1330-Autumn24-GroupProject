@@ -43,10 +43,10 @@ def main(stdscr):
                 maze_index = 0
                 break
             
-            elif key == ord('1'):
+            elif ord('1') <= key <= ord('9'):
                 win.erase()
                 win.refresh()
-                maze_index = 1
+                maze_index = int(chr(key))
                 break
 
             # Display
@@ -83,6 +83,8 @@ def main(stdscr):
             player_dy, player_dx = 0, -1
         elif key == ord('d'):
             player_dy, player_dx = 0, 1
+        else:
+            player_dy, player_dx = 0, 0
         
         # Move
         if player.move(player_dy, player_dx):          
