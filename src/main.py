@@ -58,8 +58,12 @@ def main(stdscr):
     win = displayer.create_win(maze_height, maze_width, blocks.get_block_size())
     maze = sprites.Maze(win, maze_height, maze_width, **maze_loader.get_resource_info())
     player = sprites.Player(win, maze_height, maze_width, [blocks.get_block("player")], maze)
-    auto_chaser = sprites.AutoChaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, player)
-    chasers = [auto_chaser]
+    chasers = []
+    for name, route in maze_loader.get_route_info().items():
+        if name == "auto":
+            chasers.append(sprites.AutoChaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, route, player))
+        else:
+            chasers.append(sprites.FixedChaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, route))
     displaying_sprites = [maze, player] + chasers
     displayer.display_game(displaying_sprites)
 

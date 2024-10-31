@@ -27,12 +27,6 @@ class Maze(Sprite):
         self.start = start
         self.end = end
 
-    def get_start(self, name):
-        return self.start[name]
-    
-    def get_end(self):
-        return self.end
-
     def check_inrange(self, y, x):
         return 0 <= y < self.height and 0 <= x < self.width
 
@@ -65,11 +59,11 @@ class Maze(Sprite):
 class Player(MovableSprite):
     def __init__(self, win, height, width, blocks, maze):
         super().__init__(win, height, width, blocks)
-        self.y, self.x = maze.get_start("player")
+        self.y, self.x = maze.start
         self.maze = maze   
 
     def check_win(self):
-        return (self.y, self.x) == self.maze.get_end()
+        return (self.y, self.x) == self.maze.end
     
     def check_lose(self, chasers):
         for chaser in chasers:
@@ -84,9 +78,11 @@ class Player(MovableSprite):
 
 
 class Chaser(MovableSprite):
-    def __init__(self, win, height, width, blocks, maze):
+    def __init__(self, win, height, width, blocks, maze, route):
         super().__init__(win, height, width, blocks)
         self.maze = maze
+        self.route = route
+        self.y, self.x = route[0]
     
     def draw(self):
         block = self.blocks[0]
@@ -94,9 +90,8 @@ class Chaser(MovableSprite):
 
 
 class AutoChaser(Chaser):
-    def __init__(self, win, height, width, blocks, maze, player):
-        super().__init__(win, height, width, blocks, maze)
-        self.y, self.x = maze.get_start("auto_chaser")
+    def __init__(self, win, height, width, blocks, maze, route, player):
+        super().__init__(win, height, width, blocks, maze, route)
         self.player = player
 
     def search(self):
@@ -145,10 +140,8 @@ class AutoChaser(Chaser):
         
 
 class FixedChaser(Chaser):
-    def __init__(self, win, height, width, blocks, maze, index):
-        super().__init__(win, height, width, blocks, maze)
-        self.y, self.x = maze.get_start(f"fixed_chaser_{index}")
-        self.route = maze.get_fixed_route(index)
+    def __init__(self, win, height, width, blocks, maze, route):
+        super().__init__(win, height, width, blocks, maze, route)
         self.step = 0
 
     def move(self):
@@ -156,7 +149,7 @@ class FixedChaser(Chaser):
         pass
 
 
-
+# TODO: Refactor the Class
 class FixedChaserStraight(MovableSprite):
     def __init__(self,win,height,width,blocks,maze,player):
         super().__init__(win, height, width, blocks)
@@ -211,6 +204,16 @@ class FixedChaserStraight(MovableSprite):
         block.draw(self.win,self.y,self.x)
     def check_lose(self):
         return (self.y,self.x) == (self.player.y,self.player.x)
+
+
+class FixedChaserClockwise:
+    #class a movablesprite which rotate clockwisely
+    pass
+
+
+class FixedChaserAclockwise:
+    #class a movablesprite which rotate anti-clockwisely
+    pass
 
 
 
