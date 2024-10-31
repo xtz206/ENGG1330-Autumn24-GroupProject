@@ -12,16 +12,15 @@ class Sprite:
 
 class MovableSprite(Sprite):
     def move(self, dy, dx):
-        ny = self.y + dy
-        nx = self.x + dx
-        
-        if self.maze.check_route(ny, nx):
-            self.y, self.x = ny, nx
-            return True
+        if dy == 0 and dx == 0:
+            return False
+        elif not self.maze.check_route(self.y + dy, self.x + dx):
+            return False
         
         else:
-            return False
-
+            self.y += dy
+            self.x += dx
+            return True
 
 class Maze(Sprite):
     def __init__(self, win, height, width, blocks, start, end):
