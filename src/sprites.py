@@ -10,23 +10,15 @@ class Sprite:
 
 class MovableSprite(Sprite):
     def move(self, dy, dx):
-        self.y += dy
-        self.x += dx
-
-        # border check
-        if self.y < 0:
-            self.y = 0
-        elif self.y > self.height - 1:
-            self.y = self.height - 1
-        elif self.x < 0:
-            self.x = 0
-        elif self.x > self.width - 1:
-            self.x = self.width - 1
+        ny = self.y + dy
+        nx = self.x + dx
         
-        # solid block check
-        elif self.maze.check_solid(self.y, self.x):
-            self.y -= dy
-            self.x -= dx
+        if self.maze.check_route(ny, nx):
+            self.y, self.x = ny, nx
+            return True
+        
+        else:
+            return False
 
 
 class Maze(Sprite):
@@ -41,10 +33,29 @@ class Maze(Sprite):
     def get_end(self):
         return self.end
 
+    def check_inrange(self, y, x):
+        return 0 <= y < self.height and 0 <= x < self.width
+
     def check_solid(self, y, x):
         index = y * self.width + x
         return self.blocks[index].is_solid
     
+    def check_route(self, y, x):
+        return self.check_inrange(y, x) and not self.check_solid(y, x)
+    
+    @staticmethod
+    def get_distance(y1, x1, y2, x2):
+        return abs(y1- y2) + abs(x1 - x2)
+
+    def get_neighbours(self, y, x):
+        neighbours = []
+        directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+        for dy, dx in directions:
+            ny, nx = y + dy, x + dx
+            if self.check_inrange(ny, nx) and not self.check_solid(ny, nx):
+                neighbours.append((ny, nx))
+        return neighbours
+
     def draw(self):
         for index, block in enumerate(self.blocks):
             y, x = divmod(index, self.width)
