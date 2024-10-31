@@ -91,7 +91,8 @@ def main(stdscr):
             for chaser in chasers:
                 chaser.move()
         
-        # End Check
+        # Checks
+        player.check_bonus()
         if player.check_win():
             player_status = "win"
             break

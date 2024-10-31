@@ -1,3 +1,5 @@
+from blocks import Block, get_block
+
 class Sprite:
     def __init__(self, win, height, width, blocks):
         self.win = win
@@ -37,6 +39,13 @@ class Maze(Sprite):
     def check_route(self, y, x):
         return self.check_inrange(y, x) and not self.check_solid(y, x)
     
+    def check_bonus(self, y, x):
+        index = y * self.width + x
+        is_bonus = self.blocks[index] == get_block("bonus")
+        if is_bonus:
+            self.blocks[index] = get_block("air")
+        return is_bonus
+
     @staticmethod
     def get_distance(y1, x1, y2, x2):
         return abs(y1- y2) + abs(x1 - x2)
@@ -60,7 +69,9 @@ class Player(MovableSprite):
     def __init__(self, win, height, width, blocks, maze):
         super().__init__(win, height, width, blocks)
         self.y, self.x = maze.start
-        self.maze = maze   
+        self.maze = maze
+        self.score = 1000 # BASIC SCORE
+        self.step = 0
 
     def check_win(self):
         return (self.y, self.x) == self.maze.end
@@ -70,8 +81,19 @@ class Player(MovableSprite):
             if (chaser.y, chaser.x) == (self.y, self.x):
                 return True
         return False
-            
     
+    def check_bonus(self):
+        if self.maze.check_bonus(self.y, self.x):
+            self.score += 1000 # BONUS SCORE
+    
+    def move(self, dy, dx):
+        move_status = super().move(dy, dx)
+        if move_status:
+            self.step += 1
+            self.score -= 100 # STEP SCORE
+        return move_status
+
+
     def draw(self):
         block = self.blocks[0]
         block.draw(self.win, self.y, self.x)
