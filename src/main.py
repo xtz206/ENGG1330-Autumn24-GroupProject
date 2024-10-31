@@ -58,8 +58,9 @@ def main(stdscr):
     win = displayer.create_win(maze_height, maze_width, blocks.get_block_size())
     maze = sprites.Maze(win, maze_height, maze_width, **maze_loader.get_resource_info())
     player = sprites.Player(win, maze_height, maze_width, [blocks.get_block("player")], maze)
-    chaser = sprites.Chaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, player)
-    displaying_sprites = [maze, player, chaser]
+    auto_chaser = sprites.AutoChaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, player)
+    chasers = [auto_chaser]
+    displaying_sprites = [maze, player] + chasers
     displayer.display_game(displaying_sprites)
 
     # Game Loop
@@ -74,19 +75,24 @@ def main(stdscr):
 
         # Moving
         elif key == ord('w'):
-            player.move(-1, 0)
+            player_dy, player_dx = -1, 0
         elif key == ord('s'):
-            player.move(1, 0)
+            player_dy, player_dx = 1, 0
         elif key == ord('a'):
-            player.move(0, -1)
+            player_dy, player_dx = 0, -1
         elif key == ord('d'):
-            player.move(0, 1)
+            player_dy, player_dx = 0, 1
+        
+        if player.move(player_dy, player_dx):          
+            for chaser in chasers:
+                chaser.move()
         
         # End Check
         if player.check_win():
             player_status = "win"
             break
-        elif chaser.check_lose():
+        
+        elif player.check_lose(chasers):
             player_status = "lose"
             break
 
