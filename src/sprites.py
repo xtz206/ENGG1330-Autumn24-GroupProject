@@ -71,6 +71,13 @@ class Player(MovableSprite):
     def check_win(self):
         return (self.y, self.x) == self.maze.get_end()
     
+    def check_lose(self, chasers):
+        for chaser in chasers:
+            if (chaser.y, chaser.x) == (self.y, self.x):
+                return True
+        return False
+            
+    
     def draw(self):
         block = self.blocks[0]
         block.draw(self.win, self.y, self.x)
