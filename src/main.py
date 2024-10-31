@@ -73,11 +73,8 @@ def main(stdscr):
         # Keyboard Input
         key = stdscr.getch()
         
-        # Exit Game
         if key == ord('q'):
             return
-
-        # Moving
         elif key == ord('w'):
             player_dy, player_dx = -1, 0
         elif key == ord('s'):
@@ -87,6 +84,7 @@ def main(stdscr):
         elif key == ord('d'):
             player_dy, player_dx = 0, 1
         
+        # Move
         if player.move(player_dy, player_dx):          
             for chaser in chasers:
                 chaser.move()
