@@ -3,10 +3,20 @@ Better Start Menu
 Better End Menu
 
 # Mazes
-Update Maze Assets (Chaser Start)
-More Mazes to Play
+update mazes (routes)
+clarify the mazes
 
 # Mechanism
-Movable Boxes
-Bonus
+movable boxes
+[Completed]Bonus
+
+# Value Setting
+config file
+basic score
+step score
+bonus score
+
+# Miscs
+clean unused code
+readme file
 
