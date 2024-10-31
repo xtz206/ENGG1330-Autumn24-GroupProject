@@ -8,8 +8,7 @@
         ],
         "color": 1,
         "is_solid": false,
-        "is_bonus": false,
-        "is_enemy": false
+        "is_pushable": false
     },
     "blocks": [
         {
@@ -47,15 +46,10 @@
             "color":4
         },
         {
-            "name":"fixed_chaser_end"
-        },
-        {
-            "name":"fixed_chaser_start"
-        },
-        {
-            "name":"movable_block",
-            "char":"M",
-            "color":5
+            "name":"box",
+            "char":"#",
+            "color":5,
+            "is_pushable": true
         }
     ],
     "unused": [
