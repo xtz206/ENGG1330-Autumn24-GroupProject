@@ -2,20 +2,22 @@
     {
         "height": 4,
         "width": 5,
-        "start": {
-            "player": [
-                3,
-                0
-            ],
-            "auto_chaser": [
-                0,
-                0
-            ]
-        },
+        "start": [
+            3,
+            0
+        ],
         "end": [
             1,
             3
         ],
+        "routes": {
+            "auto": [
+                [
+                    0,
+                    0
+                ]
+            ]
+        },
         "block_names": [
             "air",
             "wall",
@@ -50,6 +52,7 @@
             0,
             7
         ],
+        "routes": {},
         "block_names": [
             "wall",
             "wall",
