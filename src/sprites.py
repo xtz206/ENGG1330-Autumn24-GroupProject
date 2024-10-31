@@ -75,69 +75,80 @@ class Player(MovableSprite):
         block = self.blocks[0]
         block.draw(self.win, self.y, self.x)
 
+
 class Chaser(MovableSprite):
-    def __init__(self, win, height, width, blocks, maze, player):
+    def __init__(self, win, height, width, blocks, maze):
         super().__init__(win, height, width, blocks)
-        self.y, self.x = maze.get_start("chaser")
         self.maze = maze
-        self.player = player
-    #plz check the following Astar
-    def heuristic(self,a,b):
-        return abs (a[0]-b[0])+abs[a[1]-b[1]]
-    
-    def get_neighbour(self,current):
-        neighbours=[]
-        for dy,dx in [(-1,0),(1,0),(0,-1),(0,1)]:
-            ny, nx=current[0]+dy,current[1]+dx
-            if 0<=ny<=self.height and 0<=nx<self.width and not self.maze.is_solid:
-                neighbours.append(ny,nx)
-            return neighbours
-
-    def astar_search(self,chaser,player):
-        temp_set = [(0,start)]
-        come_from={}
-        g_score={start: 0}
-        f_score={start: self.heuristic(chaser,player)}
-       
-        while temp_set:
-            temp_set.sort(key=lambda x: x[0])
-            _, current=temp_set.pop(0)
-            
-            if current == player:
-                path=[]
-                while current in came_from:
-                    path.append(current)
-                    current=come_from[current]
-                path.reverse()
-            return path
-            
-            for neighbour in self.get_neighbour(current):
-                new_g_score=g_score[current]+1
-                
-                if neighbour not in g_score or new_g_score<g_score[neighbour]:
-                    came_from[neighbour]=current
-                    g_score[neighbour]=new_g_score
-                    f_score[neighbour]=new_g_score+self.heuristic(neighbour,player)
-                    temp_set.append((f_score[neighbour],neighbour))
-        
-        return[]#copilot helps here -- Do we need to clarify?
-
-    def move(self):
-        chaser=(self.y,self.x)
-        player=(self.player.y,self.player.x)
-        path=self.astar_search(chaser,player)
-        if path:
-            next_move=path[0]
-            dy,dx=next_move[0]-self.y,next_move[1]-self.x
-            super().move(dy,dx)
-            self.y,self.x=next_move
-     
-    def check_lose(self):
-        return (self.y, self.x) == (self.player.y, self.player.x)
     
     def draw(self):
         block = self.blocks[0]
         block.draw(self.win, self.y, self.x)
+
+
+class AutoChaser(Chaser):
+    def __init__(self, win, height, width, blocks, maze, player):
+        super().__init__(win, height, width, blocks, maze)
+        self.y, self.x = maze.get_start("auto_chaser")
+        self.player = player
+
+    def search(self):
+        start = self.y, self.x
+        end = self.player.y, self.player.x
+        open_nodes = [start]
+        closed_nodes = []
+        prev_nodes = {start: None}
+        costs = {start: 0}
+
+        while open_nodes:
+            open_nodes.sort(key=lambda node: costs[node] + self.maze.get_distance(*node, *end))
+            open_node = open_nodes.pop(0)
+            closed_nodes.append(open_node)
+
+            # Path Found and Return
+            if open_node == end:
+                path = []
+                curr = end
+                while curr != None:
+                    path.append(curr)
+                    curr = prev_nodes[curr]
+                path.reverse()
+                return path
+            
+            for neighbour_node in self.maze.get_neighbours(*open_node):
+                if neighbour_node not in closed_nodes and neighbour_node not in open_nodes:
+                    open_nodes.append(neighbour_node)
+                    prev_nodes[neighbour_node] = open_node
+                    cost = costs[open_node] + 1
+                    if neighbour_node not in costs or cost < costs[neighbour_node]:
+                        costs[neighbour_node] = cost
+            
+        # No Path Found
+        return []
+
+    def move(self):
+        path = self.search()
+        if len(path) < 2:
+            dy = dx = 0
+        else:
+            target = path[1]
+            dy = target[0] - self.y
+            dx = target[1] - self.x
+        super().move(dy, dx)
+        
+
+class FixedChaser(Chaser):
+    def __init__(self, win, height, width, blocks, maze, index):
+        super().__init__(win, height, width, blocks, maze)
+        self.y, self.x = maze.get_start(f"fixed_chaser_{index}")
+        self.route = maze.get_fixed_route(index)
+        self.step = 0
+
+    def move(self):
+        # TODO: Complete the Move Method of FixedChaser
+        pass
+
+
 
 class FixedChaserStraight(MovableSprite):
     def __init__(self,win,height,width,blocks,maze,player):
