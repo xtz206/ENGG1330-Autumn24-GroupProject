@@ -6,23 +6,17 @@
             {
                 "content": "SOME TITLE TEXTS",
                 "line": 1,
-                "align": true,
-                "indent": 0,
-                "color": 0
+                "align": true
             },
             {
                 "content": "[T]    Tutorial",
                 "line": 4,
-                "align": false,
-                "indent": 5,
-                "color": 0
+                "indent": 5
             },
             {
                 "content": "[Q]    Quit",
                 "line": 5,
-                "align": false,
-                "indent": 5,
-                "color": 0
+                "indent": 5
             }
         ]
     },
@@ -33,16 +27,24 @@
             {
                 "content": "SOME WINNER TEXTS",
                 "line": 1,
+                "align": true
+            },
+            {
+                "content": "YOU USED %d STEPS",
+                "line": 2,
                 "align": true,
-                "indent": 0,
-                "color": 0
+                "variable": true
+            },
+            {
+                "content": "YOUR SCORE IS %d",
+                "line": 3,
+                "align": true,
+                "variable": true
             },
             {
                 "content": "[Q]    Quit",
                 "line": 4,
-                "align": true,
-                "indent": 0,
-                "color": 0
+                "align": true
             }
         ]
     },
@@ -53,16 +55,12 @@
             {
                 "content": "SOME LOSER TEXTS",
                 "line": 1,
-                "align": true,
-                "indent": 0,
-                "color": 0
+                "align": true
             },
             {
                 "content": "[Q]    Quit",
                 "line": 4,
-                "align": true,
-                "indent": 0,
-                "color": 0
+                "align": true
             }
         ]
     }

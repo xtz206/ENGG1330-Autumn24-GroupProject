@@ -1,12 +1,16 @@
 import curses
 
 class Text:
-    def __init__(self, content, line, align, indent, color):
+    def __init__(self, content, line, align=False, indent=0, variable=False, color=0):
         self.content = content
         self.line = line
         self.align = align
         self.indent = indent
+        self.variable = variable
         self.color = color
+
+    def fillin_variable(self, fillins):
+        self.content = self.content % fillins
 
     def draw(self, win):
         height, width = win.getmaxyx()
@@ -38,6 +42,16 @@ class Displayer:
     def display_start(self, texts):
         self.win.erase()
         for text in texts:
+            text.draw(self.win)
+        self.win.refresh()
+    
+    def display_end(self, texts, results):
+        self.win.erase()
+        results = iter(results)
+        for text in texts:
+            if text.variable:
+                result = next(results)
+                text.fillin_variable(result)
             text.draw(self.win)
         self.win.refresh()
 

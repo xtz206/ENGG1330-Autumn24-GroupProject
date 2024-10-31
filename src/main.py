@@ -107,7 +107,7 @@ def main(stdscr):
     # End Menu
     menu_loader.set_index(player_status)
     win = displayer.create_win(*menu_loader.get_basic_info())
-    displayer.display_start(menu_loader.get_resource_info())
+    displayer.display_end(menu_loader.get_resource_info(), (player.step, player.score))
 
     while True:
             
@@ -119,7 +119,7 @@ def main(stdscr):
                 return
 
             # Display
-            displayer.display_start(menu_loader.get_resource_info())
+            displayer.display_end(menu_loader.get_resource_info(), results)
 
 curses.wrapper(main)
 
