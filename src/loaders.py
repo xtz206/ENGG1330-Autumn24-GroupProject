@@ -77,7 +77,7 @@ class MazeLoader(MultiLoader):
     
     def get_route_info(self):
         maze_data = self.data[self.index]
-        return maze_data["routes"]
+        return maze_data.get("routes", {})
         
 
 
