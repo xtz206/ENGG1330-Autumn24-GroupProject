@@ -34,7 +34,7 @@
             "wall",
             "air",
             "wall",
-            "air",
+            "start",
             "air",
             "air",
             "air",
@@ -52,7 +52,18 @@
             0,
             7
         ],
-        "routes": {},
+        "routes": {
+            "fix0": [
+                [5, 1],
+                [5, 2],
+                [5, 3],
+                [5, 4],
+                [5, 5],
+                [5, 4],
+                [5, 3],
+                [5, 2]
+            ]
+        },
         "block_names": [
             "wall",
             "wall",
@@ -83,7 +94,7 @@
             "bonus",
             "wall",
             "wall",
-            "movable_block",
+            "box",
             "air",
             "air",
             "air",
@@ -95,11 +106,11 @@
             "wall",
             "wall",
             "wall",
-            "fixed_chaser_start",
             "air",
             "air",
             "air",
-            "fixed_chaser_end",
+            "air",
+            "air",
             "wall",
             "wall",
             "wall",
