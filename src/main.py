@@ -60,7 +60,7 @@ def main(stdscr):
     player = sprites.Player(win, maze_height, maze_width, [blocks.get_block("player")], maze)
     chasers = []
     for name, route in maze_loader.get_route_info().items():
-        if name == "auto":
+        if "auto" in name:
             chasers.append(sprites.AutoChaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, route, player))
         else:
             chasers.append(sprites.FixedChaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, route))
