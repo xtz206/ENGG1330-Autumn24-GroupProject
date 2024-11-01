@@ -64,6 +64,28 @@ def print_helps():
     print("    -f <path>  Format the jsons")
     print("    -h         Display the help")
 
+def main(*args, **kwargs):
+    if len(args) < 2:
+        print("You must specify the mode")
+        print_helps()
+        return
+    if args[1] == "-h":
+        print_helps()
+        return
+    if len(args) < 3:
+        print("You must specify the path")
+        print_helps()
+        return
+    if args[1] == "-m":
+        check_mazes(args[2])
+        return
+    if args[1] == "-f":
+        json_format(args[2])
+        return
+    else:
+        print("Unknown options")
+        print_helps()
+        return
+
 if __name__ == "__main__":
-    # json_format("assets/mazes.json")
-    check_mazes("assets/mazes.json")
+    main(*sys.argv)
