@@ -1,4 +1,5 @@
-from blocks import Block, get_block
+from blocks import get_block
+from utils import log_to_file
 
 class Sprite:
     def __init__(self, win, height, width, blocks):
@@ -12,38 +13,14 @@ class Sprite:
 
 class MovableSprite(Sprite):
     def move(self, dy, dx):
-        if dy == 0 and dx == 0:
-            return False
-        elif not self.maze.check_route(self.y + dy, self.x + dx):
-            return False
-        
-        else:
-            self.y += dy
-            self.x += dx
-            return True
+        self.y += dy
+        self.x += dx
 
 class Maze(Sprite):
     def __init__(self, win, height, width, blocks, start, end):
         super().__init__(win, height, width, blocks)
         self.start = start
         self.end = end
-
-    def check_inrange(self, y, x):
-        return 0 <= y < self.height and 0 <= x < self.width
-
-    def check_solid(self, y, x):
-        index = y * self.width + x
-        return self.blocks[index].is_solid
-    
-    def check_route(self, y, x):
-        return self.check_inrange(y, x) and not self.check_solid(y, x)
-    
-    def check_bonus(self, y, x):
-        index = y * self.width + x
-        is_bonus = self.blocks[index] == get_block("bonus")
-        if is_bonus:
-            self.blocks[index] = get_block("air")
-        return is_bonus
 
     @staticmethod
     def get_distance(y1, x1, y2, x2):
@@ -54,9 +31,49 @@ class Maze(Sprite):
         directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
         for dy, dx in directions:
             ny, nx = y + dy, x + dx
-            if self.check_inrange(ny, nx) and not self.check_solid(ny, nx):
+            if self.check_route(ny, nx):
                 neighbours.append((ny, nx))
         return neighbours
+
+    def check_inrange(self, y, x):
+        return 0 <= y < self.height and 0 <= x < self.width
+
+    def check_solid(self, y, x):
+        index = y * self.width + x
+        return self.blocks[index].is_solid
+    
+    def check_route(self, y, x):
+        return self.check_inrange(y, x) and not self.check_solid(y, x)
+
+    def check_box(self, y, x):
+        index = y * self.width + x
+        return self.blocks[index] == get_block("box")
+
+    def check_box_pushable(self, y, x, dy, dx):
+        ny, nx = y + dy, x + dx
+        if self.check_route(ny, nx):
+            return 1
+        elif self.check_box(ny, nx):
+            n = self.check_box_pushable(ny, nx, dy, dx)
+            return n + 1 if n != 0 else 0
+        else:
+            return 0
+
+    def update_box(self, y, x, dy, dx, n):
+        ny, nx = y + dy * n, x + dx * n
+        index = y * self.width + x
+        nindex = ny * self.width + nx
+        self.blocks[index] = get_block("air")
+        self.blocks[nindex] = get_block("box")
+
+    def check_bonus(self, y, x):
+        index = y * self.width + x
+        return self.blocks[index] == get_block("bonus")
+    
+    def update_bonus(self, y, x):
+        index = y * self.width + x
+        if self.check_bonus(y, x):
+            self.blocks[index] = get_block("air")
 
     def draw(self):
         for index, block in enumerate(self.blocks):
@@ -84,18 +101,32 @@ class Player(MovableSprite):
     def check_bonus(self):
         if self.maze.check_bonus(self.y, self.x):
             self.score += 1000 # BONUS SCORE
-    
+
     def move(self, dy, dx):
-        move_status = super().move(dy, dx)
-        if move_status:
-            self.step += 1
-            self.score -= 100 # STEP SCORE
-        return move_status
+        ny, nx = self.y + dy, self.x + dx
+        if dy == dx == 0:
+            return False   
+        elif self.maze.check_box(ny, nx):
+            n = self.maze.check_box_pushable(ny, nx, dy, dx)
+            log_to_file(f"n: {n}")
+            if n == 0:
+                return False
+            else:
+                self.maze.update_box(ny, nx, dy, dx, n)
+        elif not self.maze.check_route(ny, nx):
+            return False
+        super().move(dy, dx)
+        if self.maze.check_bonus(self.y, self.x):
+            self.maze.update_bonus(self.y, self.x)
+            self.score += 10000 # BONUS SCORE
+        self.step += 1
+        self.score -= 10 # STEP SCORE
 
-
+        return True
+        
     def draw(self):
         block = self.blocks[0]
-        block.draw(self.win, self.y, self.x)
+        block.draw(self.win, self.y, self.x)        
 
 
 class Chaser(MovableSprite):
@@ -132,7 +163,7 @@ class AutoChaser(Chaser):
             if open_node == end:
                 path = []
                 curr = end
-                while curr != None:
+                while curr is not None:
                     path.append(curr)
                     curr = prev_nodes[curr]
                 path.reverse()
@@ -152,13 +183,15 @@ class AutoChaser(Chaser):
     def move(self):
         path = self.search()
         if len(path) < 2:
-            dy = dx = 0
-        else:
-            target = path[1]
-            dy = target[0] - self.y
-            dx = target[1] - self.x
+            return
+
+        ny, nx = path[1]
+        if not self.maze.check_route(ny, nx):
+            return
+
+        dy, dx = ny - self.y, nx - self.x
         super().move(dy, dx)
-        
+
 
 class FixedChaser(Chaser):
     def __init__(self, win, height, width, blocks, maze, route):
@@ -166,8 +199,11 @@ class FixedChaser(Chaser):
         self.step = 0
 
     def move(self):
+        ny, nx = self.route[self.step % len(self.route)]
+        if not self.maze.check_route(ny, nx):
+            return
+        dy, dx = ny - self.y, nx - self.x
         self.step += 1
-        target = self.route[self.step % len(self.route)]
-        dy, dx = target[0] - self.y, target[1] - self.x
         super().move(dy, dx)
+
 

@@ -49,10 +49,8 @@
             "name":"box",
             "char":"#",
             "color":5,
+            "is_solid": true,
             "is_pushable": true
         }
-    ],
-    "unused": [
-
     ]
 }
