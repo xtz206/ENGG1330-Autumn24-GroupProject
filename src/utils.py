@@ -5,16 +5,15 @@ def log_to_file(*msgs, sep=" ", end="\n"):
         f.write(sep.join([format(msg) for msg in msgs]) + end)
 
 def json_format(path):
-    import json
-
-    
     with open(path, 'r') as f:
         data = json.load(f)
     if data is None:
+        print("Error occurs when decoding json file")
         return
     else:
         with open(path, 'w') as f:
             json.dump(data, f, indent=4)
+        print("Formatting Successful")
 
 def check_maze(maze):
     height = maze["height"]
