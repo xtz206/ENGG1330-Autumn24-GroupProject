@@ -1,4 +1,5 @@
 import json
+import sys
 
 def log_to_file(*msgs, sep=" ", end="\n"):
     with open("./logs.txt", 'a') as f:
