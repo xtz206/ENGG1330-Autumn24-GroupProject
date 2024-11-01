@@ -40,10 +40,35 @@ class Maze(Sprite):
     
     def check_bonus(self, y, x):
         index = y * self.width + x
-        is_bonus = self.blocks[index] == get_block("bonus")
-        if is_bonus:
+        return self.blocks[index] == get_block("bonus")
+    
+    def update_bonus(self, y, x):
+        index = y * self.width + x
+        if self.check_bonus(y, x):
             self.blocks[index] = get_block("air")
-        return is_bonus
+    
+    def check_box(self, y, x):
+        index = y * self.width + x
+        return self.blocks[index] == get_block("box")
+
+    def check_box_pushable(self, y, x, dy, dx):
+        ny, nx = y + dy, x + dx
+        if not self.check_box(y, x):
+            return 0
+        elif self.check_box(ny, nx):
+            n = self.check_box_pushable(ny, nx, dy, dx)
+            return 0 if n == 0 else n + 1
+        elif self.check_route(ny, nx):
+            return 1
+        else:
+            return 0
+
+    def update_box(self, y, x, dy, dx, n):
+        ny, nx = y + dy * n, x + dx * n
+        index = y * self.width + x
+        nindex = ny * self.width + nx
+        self.blocks[index] = get_block("air")
+        self.blocks[nindex] = get_block("box")
 
     @staticmethod
     def get_distance(y1, x1, y2, x2):
@@ -84,15 +109,30 @@ class Player(MovableSprite):
     def check_bonus(self):
         if self.maze.check_bonus(self.y, self.x):
             self.score += 1000 # BONUS SCORE
-    
+
     def move(self, dy, dx):
-        move_status = super().move(dy, dx)
-        if move_status:
-            self.step += 1
-            self.score -= 100 # STEP SCORE
-        return move_status
+        ny, nx = self.y + dy, self.x + dx
+        if dy == dx == 0:
+            return False
+        if not self.maze.check_route(ny, nx):
+            return False
+        if self.maze.check_box(ny, nx):
+            n = self.maze.check_box_pushable(ny, nx, dy, dx)
+            if n == 0:
+                return False
+            else:
+                self.maze.update_box(ny, nx, dy, dx, n)
+        
+        super().move(dy, dx)
 
+        if self.maze.check_bonus(self.y, self.x):
+            self.maze.update_bonus(self.y, self.x)
+            self.score += 10000 # BONUS SCORE
+        self.step += 1
+        self.score -= 10 # STEP SCORE
 
+        return True
+        
     def draw(self):
         block = self.blocks[0]
         block.draw(self.win, self.y, self.x)

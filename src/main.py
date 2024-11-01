@@ -92,7 +92,6 @@ def main(stdscr):
                 chaser.move()
         
         # Checks
-        player.check_bonus()
         if player.check_win():
             player_status = "win"
             break
