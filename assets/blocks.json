@@ -1,9 +1,9 @@
-{   
+{
     "default": {
         "name": "default",
         "char": " ",
         "size": [
-            1, 
+            1,
             1
         ],
         "color": 1,
@@ -36,23 +36,21 @@
             "color": 3
         },
         {
-            "name":"bonus",
-            "char":"$",
-            "color":3
+            "name": "bonus",
+            "char": "$",
+            "color": 3
         },
         {
-            "name":"chaser",
-            "char":"*",
-            "color":4
+            "name": "chaser",
+            "char": "*",
+            "color": 4
         },
         {
-            "name":"box",
-            "char":"#",
-            "color":5,
+            "name": "box",
+            "char": "#",
+            "color": 5,
+            "is_solid": true,
             "is_pushable": true
         }
-    ],
-    "unused": [
-
     ]
 }
