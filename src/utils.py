@@ -24,33 +24,37 @@ def check_maze(maze):
     blocks = maze["block_names"]
 
     if len(blocks) != height * width:
-        return f"Block Count is not consistent", 0
+        return False, "Block Count Unconsistent", f"Get {len(blocks)} blocks while expected {height * width} blocks"
+    
+    for index, block in enumerate(blocks):
+        if block not in ("air", "wall", "start", "end", "bonus", "box"):
+            return False, "Unknown Blocks", f"Get unknown block {block} at {index}"
 
     index = start[0] * width + start[1]
     if blocks[index] != "start":
-        return f"Start is not consistent", index
+        return False, "Block Start Unconsistent", f"Get {blocks[index]} at {index} while expected start"
     
     index = end[0] * width + end[1]
     if blocks[index] != "end":
-        return f"End is not consistent", index
+        return False, "Block End Unconsistent", f"Get {blocks[index]} at {index} while expected end"
     
     for route in routes.values():
         for block in route:
             index = block[0] * width + block[1]
             if blocks[index] != "air":
-                return f"route {block} is blocked", index
+                return False, "Route is Blocked", f"Get {blocks[index]} at {index} while expected air"
     
-    return None, None
-
+    return True, None, None
 
 def check_mazes(path):
     with open(path, 'r') as f:
         data = json.load(f)
     for index, maze in enumerate(data):
-        reason, index = check_maze(maze)
-        if reason is not None:
-            print(f"Maze {index} has problems, Reason: {reason}, Index: {index}")
-
+        status, reason, description = check_maze(maze)
+        if not status:
+            print(f"Error occurs at Maze {index}")
+            print(f"Reason: {reason}")
+            print(f"Description: {description}")
 
 if __name__ == "__main__":
     # json_format("assets/mazes.json")
