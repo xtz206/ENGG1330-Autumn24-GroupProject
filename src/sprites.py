@@ -1,4 +1,4 @@
-from blocks import Block, get_block
+from blocks import get_block
 
 class Sprite:
     def __init__(self, win, height, width, blocks):
@@ -128,7 +128,7 @@ class Player(MovableSprite):
         
     def draw(self):
         block = self.blocks[0]
-        block.draw(self.win, self.y, self.x)
+        block.draw(self.win, self.y, self.x)        
 
 
 class Chaser(MovableSprite):
@@ -191,7 +191,7 @@ class AutoChaser(Chaser):
             dy = target[0] - self.y
             dx = target[1] - self.x
         super().move(dy, dx)
-        
+
 
 class FixedChaser(Chaser):
     def __init__(self, win, height, width, blocks, maze, route):
@@ -203,4 +203,5 @@ class FixedChaser(Chaser):
         target = self.route[self.step % len(self.route)]
         dy, dx = target[0] - self.y, target[1] - self.x
         super().move(dy, dx)
+
 
