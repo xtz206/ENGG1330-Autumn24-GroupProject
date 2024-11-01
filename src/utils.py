@@ -56,6 +56,14 @@ def check_mazes(path):
             print(f"Reason: {reason}")
             print(f"Description: {description}")
 
+def print_helps():
+
+    print("Usage: python utils.py [OPTIONS] [PATH]")
+    print("Options: ")
+    print("    -m <path>  Check the Mazes ")
+    print("    -f <path>  Format the jsons")
+    print("    -h         Display the help")
+
 if __name__ == "__main__":
     # json_format("assets/mazes.json")
     check_mazes("assets/mazes.json")
