@@ -111,7 +111,8 @@ class Player(MovableSprite):
                 return False
             else:
                 self.maze.update_box(ny, nx, dy, dx, n)
-        
+        elif not self.maze.check_route(ny, nx):
+            return False
         super().move(dy, dx)
         if self.maze.check_bonus(self.y, self.x):
             self.maze.update_bonus(self.y, self.x)
