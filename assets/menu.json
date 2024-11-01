@@ -1,7 +1,7 @@
 {
     "start": {
         "height": 10,
-        "width": 30,
+        "width": 20,
         "texts": [
             {
                 "content": "SOME TITLE TEXTS",
@@ -9,14 +9,19 @@
                 "align": true
             },
             {
-                "content": "[T]    Tutorial",
-                "line": 4,
-                "indent": 5
+                "content": "[ T ] Trial",
+                "line": 3,
+                "indent": 0
             },
             {
-                "content": "[Q]    Quit",
+                "content": "[1-9] Mazes",
+                "line": 4,
+                "indent": 0
+            },
+            {
+                "content": "[ Q ] Quit",
                 "line": 5,
-                "indent": 5
+                "indent": 0
             }
         ]
     },
