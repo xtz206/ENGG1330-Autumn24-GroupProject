@@ -62,3 +62,26 @@ class FixedChaserClockwise:
 class FixedChaserAclockwise:
     #class a movablesprite which rotate anti-clockwisely
     pass
+
+
+#Plz check the Movable Blocks --wy
+class MovableBlock(MovableSprite):
+    def __init__(self,win, height, width, blocks, maze,player):
+        super().__init__(win, height, width, blocks,maze)
+        self.player = player
+    
+    def search_player(self):
+        neighbours=self.maze.get_neighbours(self.y,self.x)
+        for neighbour in neighbours:
+            if (self.player.y,self.player.x)==neighbour:
+                return True
+        return False
+    
+    def move(self,player_new_y,player_new_x):
+        if self.search_player():
+            dy=player_new_y-self.player.y
+            dx=player_new_x-self.player.x
+            new_y=self.y+dy
+            new_x=self.x+dx
+            if maze.check_inrange(new_y,new_x) and not maze.check_solid(new_y,new_x):
+                super().move(dy,dx)
