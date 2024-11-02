@@ -54,14 +54,38 @@
         ],
         "routes": {
             "fix0": [
-                [5, 1],
-                [5, 2],
-                [5, 3],
-                [5, 4],
-                [5, 5],
-                [5, 4],
-                [5, 3],
-                [5, 2]
+                [
+                    5,
+                    1
+                ],
+                [
+                    5,
+                    2
+                ],
+                [
+                    5,
+                    3
+                ],
+                [
+                    5,
+                    4
+                ],
+                [
+                    5,
+                    5
+                ],
+                [
+                    5,
+                    4
+                ],
+                [
+                    5,
+                    3
+                ],
+                [
+                    5,
+                    2
+                ]
             ]
         },
         "block_names": [
@@ -102,7 +126,7 @@
             "air",
             "air",
             "air",
-            "box",
+            "air",
             "wall",
             "wall",
             "wall",
@@ -150,6 +174,44 @@
             0,
             7
         ],
+        "routes": {
+            "fix0": [
+                [
+                    3,
+                    4
+                ],
+                [
+                    3,
+                    5
+                ],
+                [
+                    3,
+                    6
+                ],
+                [
+                    3,
+                    5
+                ]
+            ],
+            "fix1": [
+                [
+                    7,
+                    4
+                ],
+                [
+                    6,
+                    4
+                ],
+                [
+                    6,
+                    5
+                ],
+                [
+                    7,
+                    5
+                ]
+            ]
+        },
         "block_names": [
             "wall",
             "wall",
@@ -179,14 +241,6 @@
             "wall",
             "wall",
             "wall",
-            "fixed_chaser_start", # start
-            "air",
-            "fixed_chaser_end",
-            "wall",
-            "wall",
-            "wall",
-            "wall",
-            "wall",
             "air",
             "air",
             "air",
@@ -196,10 +250,18 @@
             "wall",
             "wall",
             "air",
+            "air",
+            "air",
             "wall",
             "wall",
             "wall",
             "wall",
+            "wall",
+            "air",
+            "wall",
+            "wall",
+            "wall",
+            "air",
             "bonus",
             "wall",
             "wall",
@@ -211,7 +273,7 @@
             "box",
             "air",
             "wall",
-            "fixed_chaser_start",
+            "air",
             "air",
             "wall",
             "wall",
@@ -236,6 +298,44 @@
             0,
             7
         ],
+        "routes": {
+            "fix0": [
+                [
+                    2,
+                    6
+                ],
+                [
+                    2,
+                    7
+                ],
+                [
+                    2,
+                    8
+                ],
+                [
+                    2,
+                    7
+                ]
+            ],
+            "fix1": [
+                [
+                    4,
+                    3
+                ],
+                [
+                    5,
+                    3
+                ],
+                [
+                    5,
+                    4
+                ],
+                [
+                    4,
+                    4
+                ]
+            ]
+        },
         "block_names": [
             "wall",
             "wall",
@@ -263,9 +363,9 @@
             "wall",
             "wall",
             "wall",
-            "fixed_chaser_start",
             "air",
-            "fixed_chaser_end",
+            "air",
+            "air",
             "wall",
             "air",
             "box",
@@ -280,7 +380,7 @@
             "wall",
             "air",
             "air",
-            "fixed_chaser_start",
+            "air",
             "air",
             "wall",
             "air",
@@ -320,8 +420,89 @@
             9,
             6
         ],
+        "routes": {
+            "fix0": [
+                [
+                    7,
+                    0
+                ],
+                [
+                    6,
+                    0
+                ],
+                [
+                    6,
+                    1
+                ],
+                [
+                    7,
+                    1
+                ]
+            ],
+            "fix1": [
+                [
+                    6,
+                    2
+                ],
+                [
+                    6,
+                    3
+                ],
+                [
+                    7,
+                    3
+                ],
+                [
+                    7,
+                    2
+                ]
+            ],
+            "fix2": [
+                [
+                    8,
+                    0
+                ],
+                [
+                    8,
+                    1
+                ],
+                [
+                    8,
+                    2
+                ],
+                [
+                    8,
+                    3
+                ],
+                [
+                    8,
+                    2
+                ],
+                [
+                    8,
+                    1
+                ]
+            ],
+            "fix3": [
+                [
+                    7,
+                    5
+                ],
+                [
+                    7,
+                    6
+                ],
+                [
+                    7,
+                    7
+                ],
+                [
+                    7,
+                    6
+                ]
+            ]
+        },
         "block_names": [
-            "wall",
             "wall",
             "wall",
             "wall",
@@ -378,26 +559,26 @@
             "wall",
             "air",
             "air",
-            "fixed_chaser_start",
+            "air",
+            "air",
+            "wall",
+            "air",
+            "air",
+            "air",
+            "wall",
+            "air",
+            "air",
+            "air",
             "air",
             "wall",
             "air",
             "air",
             "air",
             "wall",
-            "fixed_chaser_start",
             "air",
             "air",
             "air",
-            "wall",
-            "fixed_chaser_start",
             "air",
-            "fixed_chaser_end",
-            "wall",
-            "fixed_chaser_start",
-            "air",
-            "air",
-            "fixed_chaser_end",
             "wall",
             "air",
             "air",
@@ -425,6 +606,80 @@
             7,
             0
         ],
+        "routes": {
+            "fix0": [
+                [
+                    1,
+                    1
+                ],
+                [
+                    1,
+                    0
+                ],
+                [
+                    2,
+                    0
+                ],
+                [
+                    2,
+                    1
+                ]
+            ],
+            "fix1": [
+                [
+                    1,
+                    3
+                ],
+                [
+                    1,
+                    2
+                ],
+                [
+                    0,
+                    2
+                ],
+                [
+                    0,
+                    3
+                ]
+            ],
+            "fix2": [
+                [
+                    3,
+                    1
+                ],
+                [
+                    3,
+                    2
+                ],
+                [
+                    4,
+                    2
+                ],
+                [
+                    4,
+                    1
+                ]
+            ],
+            "fix3": [
+                [
+                    2,
+                    4
+                ],
+                [
+                    2,
+                    3
+                ],
+                [
+                    3,
+                    3
+                ],
+                [
+                    3,
+                    4
+                ]
+            ]
+        },
         "block_names": [
             "start",
             "air",
@@ -433,19 +688,19 @@
             "wall",
             "wall",
             "air",
-            "fixed_chaser_start",
             "air",
-            "fixed_chaser_start",
-            "bonus",
-            "wall",
             "air",
             "air",
             "bonus",
             "air",
-            "fixed_chaser_start",
+            "air",
+            "air",
+            "bonus",
+            "air",
+            "air",
             "wall",
             "wall",
-            "fixed_chaser_start",
+            "air",
             "air",
             "air",
             "air",
@@ -493,6 +748,32 @@
             2,
             4
         ],
+        "routes": {
+            "fix0": [
+                [
+                    4,
+                    2
+                ],
+                [
+                    4,
+                    1
+                ],
+                [
+                    4,
+                    0
+                ],
+                [
+                    4,
+                    1
+                ]
+            ],
+            "auto": [
+                [
+                    7,
+                    3
+                ]
+            ]
+        },
         "block_names": [
             "wall",
             "wall",
@@ -514,9 +795,9 @@
             "wall",
             "air",
             "wall",
-            "fixed_chaser_end",
             "air",
-            "fixed_chaser_start",
+            "air",
+            "air",
             "air",
             "wall",
             "air",
@@ -531,8 +812,8 @@
             "wall",
             "start",
             "air",
-            "chaser",
-            "wall",
+            "air",
+            "air",
             "wall",
             "wall",
             "wall",
@@ -552,6 +833,28 @@
             2,
             4
         ],
+        "routes": {
+            "auto": [
+                [
+                    6,
+                    0
+                ]
+            ],
+            "fix0": [
+                [
+                    7,
+                    2
+                ],
+                [
+                    8,
+                    2
+                ],
+                [
+                    9,
+                    2
+                ]
+            ]
+        },
         "block_names": [
             "wall",
             "air",
@@ -568,15 +871,15 @@
             "air",
             "wall",
             "wall",
-            "wall",
+            "air",
             "air",
             "air",
             "end",
-            "air",
+            "box",
             "wall",
             "air",
             "box",
-            "air",
+            "wall",
             "air",
             "air",
             "air",
@@ -595,7 +898,7 @@
             "wall",
             "air",
             "wall",
-            "chaser",
+            "air",
             "air",
             "wall",
             "air",
@@ -604,7 +907,7 @@
             "wall",
             "air",
             "wall",
-            "fixed_chaser_start",
+            "air",
             "air",
             "wall",
             "air",
@@ -618,7 +921,7 @@
             "wall",
             "start",
             "air",
-            "fixed_chaser_end",
+            "air",
             "air",
             "wall",
             "wall",
