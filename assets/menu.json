@@ -52,46 +52,56 @@
     },
     "win": {
         "height": 10,
-        "width": 30,
+        "width": 40,
         "texts": [
             {
-                "content": "SOME WINNER TEXTS",
-                "line": 1,
+                "content": "YOU HAVE ESCAPED FROM THE GREIVERS",
+                "line": 5,
                 "align": true
             },
             {
-                "content": "YOU USED %d STEPS",
-                "line": 2,
+                "content": "%d STEPS TAKEN",
+                "line": 6,
                 "align": true,
                 "variable": true
             },
             {
-                "content": "YOUR SCORE IS %d",
-                "line": 3,
+                "content": "SCORE: %d",
+                "line": 7,
                 "align": true,
                 "variable": true
             },
             {
-                "content": "[Q]    Quit",
-                "line": 4,
+                "content": "PRESS C TO Continue",
+                "line": 9,
+                "align": true
+            },
+            {
+                "content": "PRESS Q TO Quit",
+                "line": 10,
                 "align": true
             }
         ]
     },
     "lose": {
         "height": 10,
-        "width": 30,
+        "width": 40,
         "texts": [
             {
-                "content": "SOME LOSER TEXTS",
-                "line": 1,
+                "content": "YOU GOT CAUGHT",
+                "line": 5,
                 "align": true
             },
             {
-                "content": "[Q]    Quit",
-                "line": 4,
+                "content": "PRESS R TO Retry",
+                "line": 8,
                 "align": true
-            }
+            },
+            {
+                "content": "PRESS Q TO Quit",
+                "line": 9,
+                "align": true
+            }            
         ]
     }
 }
