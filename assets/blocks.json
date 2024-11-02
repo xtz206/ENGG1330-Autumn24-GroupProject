@@ -1,10 +1,10 @@
 {
     "default": {
         "name": "default",
-        "char": " ",
+        "char": "#",
         "size": [
             1,
-            1
+            2
         ],
         "color": 1,
         "is_solid": false,
@@ -12,7 +12,9 @@
     },
     "blocks": [
         {
-            "name": "air"
+            "name": "air",
+            "char": " ",
+            "color": 1
         },
         {
             "name": "wall",
@@ -42,7 +44,7 @@
         },
         {
             "name": "chaser",
-            "char": "*",
+            "char": "G",
             "color": 4
         },
         {
