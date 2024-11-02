@@ -1,13 +1,12 @@
 # User Interface
-Better Start Menu
-Better End Menu
+[Completed]Better Start Menu
+[Completed]Better End Menu
 
 # Mazes
-update mazes (routes)
-clarify the mazes
+[Completed]update mazes (routes)
 
 # Mechanism
-movable boxes
+[Completed]movable boxes
 [Completed]Bonus
 
 # Value Setting
@@ -19,4 +18,5 @@ bonus score
 # Miscs
 clean unused code
 readme file
+videos
 
