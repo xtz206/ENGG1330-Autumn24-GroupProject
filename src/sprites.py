@@ -194,7 +194,7 @@ class AutoChaser(Chaser):
 class FixedChaser(Chaser):
     def __init__(self, win, height, width, blocks, maze, route):
         super().__init__(win, height, width, blocks, maze, route)
-        self.step = 0
+        self.step = 1
 
     def move(self):
         ny, nx = self.route[self.step % len(self.route)]
