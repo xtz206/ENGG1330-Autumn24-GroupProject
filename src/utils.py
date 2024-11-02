@@ -50,12 +50,16 @@ def check_maze(maze):
 def check_mazes(path):
     with open(path, 'r') as f:
         data = json.load(f)
+    count = 0
     for index, maze in enumerate(data):
         status, reason, description = check_maze(maze)
         if not status:
             print(f"Error occurs at Maze {index}")
             print(f"Reason: {reason}")
             print(f"Description: {description}")
+            count += 1
+    if count == 0:
+        print("All Mazes Pass the Checks")
 
 def print_helps():
 
