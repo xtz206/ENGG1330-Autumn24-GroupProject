@@ -18,11 +18,17 @@ class Text:
         x = ((width - len(self.content)) // 2 if self.align else 0) + self.indent
         win.addstr(y, x, self.content, curses.color_pair(self.color))
 
-
 class Displayer:
     def __init__(self, screen):
         self.screen = screen
         self.win = None
+
+    def erase_win(self, win):
+        win.erase()
+        h, w = win.getmaxyx()
+        win.addstr(" " * (h * w - 1), curses.color_pair(6))
+        win.insstr(h - 1, w - 1, " ", curses.color_pair(6))
+        win.refresh()
 
     def create_win(self, height, width, size=(1,1)):
         window_height = height * size[0] + 2
@@ -34,19 +40,19 @@ class Displayer:
         return self.win
 
     def display_game(self, displaying_sprites):
-        self.win.erase()
+        self.erase_win(self.win)
         for displaying_sprite in displaying_sprites:
             displaying_sprite.draw()
         self.win.refresh()
 
     def display_start(self, texts):
-        self.win.erase()
+        self.erase_win(self.win)
         for text in texts:
             text.draw(self.win)
         self.win.refresh()
     
     def display_end(self, texts, results):
-        self.win.erase()
+        self.erase_win(self.win)
         results = iter(results)
         for text in texts:
             if text.variable:

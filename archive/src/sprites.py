@@ -1,5 +1,4 @@
 from blocks import get_block
-from utils import log_to_file
 
 class Sprite:
     def __init__(self, win, height, width, blocks):
@@ -39,6 +38,8 @@ class Maze(Sprite):
         return 0 <= y < self.height and 0 <= x < self.width
 
     def check_solid(self, y, x):
+        if not self.check_inrange(y, x):
+            return False
         index = y * self.width + x
         return self.blocks[index].is_solid
     
@@ -46,11 +47,15 @@ class Maze(Sprite):
         return self.check_inrange(y, x) and not self.check_solid(y, x)
 
     def check_box(self, y, x):
+        if not self.check_inrange(y, x):
+            return False
         index = y * self.width + x
         return self.blocks[index] == get_block("box")
 
     def check_box_pushable(self, y, x, dy, dx):
         ny, nx = y + dy, x + dx
+        if not self.check_inrange(ny, nx):
+            return 0
         if self.check_route(ny, nx):
             return 1
         elif self.check_box(ny, nx):
@@ -108,7 +113,6 @@ class Player(MovableSprite):
             return False   
         elif self.maze.check_box(ny, nx):
             n = self.maze.check_box_pushable(ny, nx, dy, dx)
-            log_to_file(f"n: {n}")
             if n == 0:
                 return False
             else:
@@ -196,7 +200,7 @@ class AutoChaser(Chaser):
 class FixedChaser(Chaser):
     def __init__(self, win, height, width, blocks, maze, route):
         super().__init__(win, height, width, blocks, maze, route)
-        self.step = 0
+        self.step = 1
 
     def move(self):
         ny, nx = self.route[self.step % len(self.route)]
