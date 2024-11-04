@@ -47,6 +47,7 @@ def game(stdscr, displayer, maze_loader, maze_index):
             chasers.append(sprites.AutoChaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, route, player))
         else:
             chasers.append(sprites.FixedChaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, route))
+    maze.set_chasers(chasers)
     displaying_sprites = [maze, player] + chasers
     displayer.erase_win(stdscr)
     displayer.erase_win(win)
@@ -57,16 +58,12 @@ def game(stdscr, displayer, maze_loader, maze_index):
 
         # Keyboard Input
         key = stdscr.getch()
-
-        # Exit Game
         if key == ord('q'):
             sys.exit()
-        
         elif key == ord('r'):
             return {
                 "status": "retry",
             }
-        
         elif key == ord('w'):
             player_dy, player_dx = -1, 0
         elif key == ord('s'):
@@ -91,7 +88,7 @@ def game(stdscr, displayer, maze_loader, maze_index):
                 "score": player.score
             }
         
-        elif player.check_lose(chasers):
+        elif player.check_lose():
             return {
                 "status": "lose",
                 "step": player.step,
@@ -122,9 +119,10 @@ def end(stdscr, displayer, menu_loader, results):
                     "status": "retry",
                 }
             elif key == ord('c'):
-                return {
-                    "status": "continue"
-                }
+                if results["status"] == "win":
+                    return {
+                        "status": "continue"
+                    }
             # Display
             displayer.display_end(menu_loader.get_resource_info(), (results["step"], results["score"]))
 

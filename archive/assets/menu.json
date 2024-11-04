@@ -4,47 +4,47 @@
         "width": 80,
         "texts": [
             {
-                "content": "   __  __           ____________   _____  _    _ _   _ _   _ ______ _____   ",
+                "content": "    __  ______ _____   ______   ____  __  ___   ___   ____________ ________",
                 "line": 1,
                 "align": true
             },
             {
-                "content": "  |  \\/  |   /\\    |___  /  ____| |  __ \\| |  | | \\ | | \\ | |  ____|  __ \\  ",
+                "content": "   /  |/  /   /__  /  / ____/  / __ \\/ / / / | / / | / / ____/ __ \\ ____    ",
                 "line": 2,
                 "align": true
             },
             {
-                "content": "  | \\  / |  /  \\      / /| |__    | |__) | |  | |  \\| |  \\| | |__  | |__) | ",
+                "content": "  / /|_/ / /| | / /  / __/    / /_/ / / / /  |/ /  |/ / __/ / /_/ / ______ ",
                 "line": 3,
                 "align": true
             },
             {
-                "content": "  | |\\/| | / /\\ \\    / / |  __|   |  _  /| |  | | . ` | . ` |  __| |  _  /  ",
+                "content": " / /  / / ___ |/ /__/ /___   / _, _/ /_/ / /|  / /|  / /___/ _, _/ ___     ",
                 "line": 4,
                 "align": true
             },
             {
-                "content": "  | |  | |/ ____ \\  / /__| |____  | | \\ \\| |__| | |\\  | |\\  | |____| | \\ \\  ",
+                "content": "/_/  /_/_/  |_/____/_____/  /_/ |_|\\____/_/ |_/_/ |_/_____/_/ |_| _______  ",
                 "line": 5,
                 "align": true
             },
             {
-                "content": "  |_|  |_/_/    \\_\\/_____|______| |_|  \\_\\\\____/|_| \\_|_| \\_|______|_|  \\_\\ ",
+                "content": "*************************************************************  ",
                 "line": 6,
                 "align": true
             },
             {
-                "content": "PRESS T For Trial",
+                "content": "--------  PRESS T For Trial  --------",
                 "line": 8,
                 "align": true
             },
             {
-                "content": "Choose A Map: 1-9",
+                "content": "------ Choose A Map[1-9] ------",
                 "line": 9,
                 "align": true
             },
             {
-                "content": "PRESS Q TO Quit",
+                "content": "---   PRESS Q TO Quit   ---",
                 "line": 10,
                 "align": true
             }
@@ -77,8 +77,13 @@
                 "align": true
             },
             {
-                "content": "PRESS Q TO Quit",
+                "content": "PRESS R TO Retry",
                 "line": 10,
+                "align": true
+            },
+            {
+                "content": "PRESS Q TO Quit",
+                "line": 11,
                 "align": true
             }
         ]
@@ -101,7 +106,7 @@
                 "content": "PRESS Q TO Quit",
                 "line": 9,
                 "align": true
-            }            
+            }
         ]
     }
 }
