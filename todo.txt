@@ -10,13 +10,8 @@
 [Completed]Bonus
 
 # Value Setting
-config file
-basic score
-step score
-bonus score
+Scores
 
 # Miscs
-clean unused code
-readme file
-videos
-
+Readme
+Videos
