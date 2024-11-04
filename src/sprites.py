@@ -20,6 +20,9 @@ class Maze(Sprite):
         super().__init__(win, height, width, blocks)
         self.start = start
         self.end = end
+    
+    def set_chasers(self, chasers):
+        self.chasers = chasers
 
     @staticmethod
     def get_distance(y1, x1, y2, x2):
@@ -44,7 +47,13 @@ class Maze(Sprite):
         return self.blocks[index].is_solid
     
     def check_route(self, y, x):
-        return self.check_inrange(y, x) and not self.check_solid(y, x)
+        return self.check_inrange(y, x) and not self.check_solid(y, x) and not self.check_chasers(y, x)
+
+    def check_chasers(self, y, x):
+        for chaser in self.chasers:
+            if (y, x) == (chaser.y, chaser.x):
+                return True
+        return False
 
     def check_box(self, y, x):
         if not self.check_inrange(y, x):
@@ -97,15 +106,9 @@ class Player(MovableSprite):
     def check_win(self):
         return (self.y, self.x) == self.maze.end
     
-    def check_lose(self, chasers):
-        for chaser in chasers:
-            if (chaser.y, chaser.x) == (self.y, self.x):
-                return True
-        return False
+    def check_lose(self):
+        return self.maze.check_chasers(self.y, self.x)
     
-    def check_bonus(self):
-        if self.maze.check_bonus(self.y, self.x):
-            self.score += 1000 # BONUS SCORE
 
     def move(self, dy, dx):
         ny, nx = self.y + dy, self.x + dx
@@ -206,6 +209,7 @@ class FixedChaser(Chaser):
         ny, nx = self.route[self.step % len(self.route)]
         if not self.maze.check_route(ny, nx):
             return
+        
         dy, dx = ny - self.y, nx - self.x
         self.step += 1
         super().move(dy, dx)
