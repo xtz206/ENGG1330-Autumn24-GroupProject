@@ -48,9 +48,14 @@
             "color": 4
         },
         {
+            "name": "warning",
+            "char": " ",
+            "color": 5
+        },
+        {
             "name": "box",
             "char": "#",
-            "color": 5,
+            "color": 6,
             "is_solid": true,
             "is_pushable": true
         }
