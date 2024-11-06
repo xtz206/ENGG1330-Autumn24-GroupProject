@@ -46,7 +46,8 @@ def game(stdscr, displayer, maze_loader, maze_index):
         if "auto" in name:
             chasers.append(sprites.AutoChaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, route, player))
         else:
-            chasers.append(sprites.FixedChaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, route))
+            chasers.append(sprites.FixedChaser(win, maze_height, maze_width, [blocks.get_block("chaser"), blocks.get_block("warning")], maze, route))
+    maze.set_player(player)
     maze.set_chasers(chasers)
     displaying_sprites = [maze, player] + chasers
     displayer.erase_win(stdscr)

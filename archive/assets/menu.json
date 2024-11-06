@@ -29,7 +29,7 @@
                 "align": true
             },
             {
-                "content": "*************************************************************  ",
+                "content": "  ***********************************************************  ",
                 "line": 6,
                 "align": true
             },
@@ -39,12 +39,12 @@
                 "align": true
             },
             {
-                "content": "------ Choose A Map[1-9] ------",
+                "content": "------ Choose a Map[1-9] ------",
                 "line": 9,
                 "align": true
             },
             {
-                "content": "---   PRESS Q TO Quit   ---",
+                "content": "---   PRESS Q To Quit   ---",
                 "line": 10,
                 "align": true
             }
@@ -55,34 +55,34 @@
         "width": 40,
         "texts": [
             {
-                "content": "YOU HAVE ESCAPED FROM THE GREIVERS",
+                "content": "ツ YOU HAVE ESCAPED FROM THE GREIVERS ツ",
                 "line": 5,
                 "align": true
             },
             {
-                "content": "%d STEPS TAKEN",
+                "content": "✩✩✩ %d STEPS TAKEN ✩✩✩",
                 "line": 6,
                 "align": true,
                 "variable": true
             },
             {
-                "content": "SCORE: %d",
+                "content": "✩✩✩ SCORE: %d ✩✩✩",
                 "line": 7,
                 "align": true,
                 "variable": true
             },
             {
-                "content": "PRESS C TO Continue",
+                "content": "PRESS C To Continue →",
                 "line": 9,
                 "align": true
             },
             {
-                "content": "PRESS R TO Retry",
+                "content": "PRESS R To Retry ⟳",
                 "line": 10,
                 "align": true
             },
             {
-                "content": "PRESS Q TO Quit",
+                "content": "PRESS Q To Quit ↩",
                 "line": 11,
                 "align": true
             }
@@ -93,17 +93,17 @@
         "width": 40,
         "texts": [
             {
-                "content": "YOU GOT CAUGHT",
+                "content": "☠ YOU GOT CAUGHT ☠",
                 "line": 5,
                 "align": true
             },
             {
-                "content": "PRESS R TO Retry",
+                "content": "PRESS R To Retry ⟳",
                 "line": 8,
                 "align": true
             },
             {
-                "content": "PRESS Q TO Quit",
+                "content": "PRESS Q To Quit ↩",
                 "line": 9,
                 "align": true
             }

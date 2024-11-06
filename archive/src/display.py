@@ -23,7 +23,8 @@ class Displayer:
         self.screen = screen
         self.win = None
 
-    def erase_win(self, win):
+    @staticmethod
+    def erase_win(win):
         win.erase()
         h, w = win.getmaxyx()
         win.addstr(" " * (h * w - 1), curses.color_pair(6))
@@ -37,22 +38,23 @@ class Displayer:
         window_origin_y = (screen_height - window_height) // 2
         window_origin_x = (screen_width - window_width) // 2
         self.win = curses.newwin(window_height, window_width, window_origin_y, window_origin_x)
+        self.erase_win(self.screen)
         return self.win
 
     def display_game(self, displaying_sprites):
-        self.erase_win(self.win)
+        self.win.erase()
         for displaying_sprite in displaying_sprites:
             displaying_sprite.draw()
         self.win.refresh()
 
     def display_start(self, texts):
-        self.erase_win(self.win)
+        self.win.erase()
         for text in texts:
             text.draw(self.win)
         self.win.refresh()
     
     def display_end(self, texts, results):
-        self.erase_win(self.win)
+        self.win.erase()
         results = iter(results)
         for text in texts:
             if text.variable:

@@ -21,6 +21,9 @@ class Maze(Sprite):
         self.start = start
         self.end = end
     
+    def set_player(self, player):
+        self.player = player
+
     def set_chasers(self, chasers):
         self.chasers = chasers
 
@@ -48,6 +51,9 @@ class Maze(Sprite):
     
     def check_route(self, y, x):
         return self.check_inrange(y, x) and not self.check_solid(y, x) and not self.check_chasers(y, x)
+
+    def check_player(self, y, x):
+        return (self.player.y, self.player.x) == (y, x)
 
     def check_chasers(self, y, x):
         for chaser in self.chasers:
@@ -213,5 +219,11 @@ class FixedChaser(Chaser):
         dy, dx = ny - self.y, nx - self.x
         self.step += 1
         super().move(dy, dx)
-
+    
+    def draw(self):
+        ny, nx = self.route[self.step % len(self.route)]
+        if self.maze.check_route(ny, nx) and not self.maze.check_player(ny, nx):
+            block = self.blocks[1]
+            block.draw(self.win, ny, nx)
+        super().draw()
 
