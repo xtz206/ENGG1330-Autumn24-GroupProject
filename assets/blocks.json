@@ -3,8 +3,8 @@
         "name": "default",
         "char": "#",
         "size": [
-            1,
-            2
+            2,
+            4
         ],
         "color": 1,
         "is_solid": false,
