@@ -1,37 +1,141 @@
+import curses
+
 from blocks import get_block
 
 class Sprite:
-    def __init__(self, win, height, width, blocks):
-        self.win = win
-        self.height = height
-        self.width = width
-        self.blocks = blocks
+    """
+    A base class for all sprite objects in the game.
+
+    Attributes:
+        win:    curses.window
+            The window or screen where the sprite will be drawn.
+        height: int
+            The height of the maze.
+        width:  int
+            The width of the maze.
+        blocks: list[Block]
+            The blocks that make up the sprite.
+    
+    Methods:
+        draw():
+            An abstract interface for drawing the sprite on the window.
+    """
+    def __init__(self, win: curses.window, height: int, width: int, blocks: list["Block"]):
+        self.win: curses.window = win
+        self.height: int = height
+        self.width: int = width
+        self.blocks: list["Block"] = blocks
     
     def draw(self):
+        """
+        An abstract interface for drawing the sprite on the window.
+        """
         raise NotImplementedError
 
 class MovableSprite(Sprite):
-    def move(self, dy, dx):
+    """
+    A base class for all movable sprite objects in the game.
+
+    Attributes:
+        y: int
+            The y-coordinate of the sprite.
+        x: int
+            The x-coordinate of the sprite.
+
+    Methods:
+        move(dy, dx):
+            Moves the sprite by the given delta y and delta x.
+    """
+    def move(self, dy: int, dx: int):
+        """
+        Moves the sprite by the given delta y and delta x.
+
+        Args:
+            dy: int
+                The change in the y-coordinate.
+            dx: int
+                The change in the x-coordinate.
+        """
         self.y += dy
         self.x += dx
 
 class Maze(Sprite):
-    def __init__(self, win, height, width, blocks, start, end):
-        super().__init__(win, height, width, blocks)
-        self.start = start
-        self.end = end
-    
-    def set_player(self, player):
-        self.player = player
+    """
+    A sprite representing a maze in the game.
 
-    def set_chasers(self, chasers):
+    Attributes:
+        start:  tuple[int, int]
+            The starting point of the maze.
+        end:    tuple[int, int]
+            The ending point of the maze.
+        player: Player
+            The player object in the maze.
+        chasers: list[Chaser]
+            A list of chaser objects in the maze.
+    
+    Methods:
+        set_player(player):
+            Sets the player object in the maze.
+        set_chasers(chaser):
+            Sets the chaser objects in the maze.
+        get_distance(y1, x1, y2, x2):
+            Calculate the Manhattan distance between 2 points.
+        get_neighbours(y, x):
+            Returns a list of valid neighbouring points from a given coordinate.
+        check_inrange(y, x):
+            Check whether a position is within the maze boundaries.
+        check_solid(y, x):
+            Check whether a position is solid.
+        check_route(y, x):
+            Check whether a position is a valid route.
+        check_player(y, x):
+            Check whether a position is occupied by the player.
+        check_chasers(y, x):
+            Check whether a position is occupied by any chaser.
+        check_box(y, x):
+            Check whether a position contains a box.
+        check_box_pushable(y, x, dy, dx):
+            Check whether a box at the position can be pushed in the given direction.
+        update_box(y, x, dy, dx, n):
+            Updates the position of a box after pushing.
+        check_bonus(y, x):
+            Check whether a position contains a bonus.
+        update_bonus(y, x):
+            Updates the position of a bonus after being collected.
+        draw():
+            Draw the maze and its contents on the window.
+    """
+    def __init__(
+        self, win: curses.window, height: int, width: int, 
+        blocks: list["Block"], start: tuple[int, int], end: tuple[int, int]
+    ):
+        super().__init__(win, height, width, blocks)
+        self.start: tuple[int, int] = start
+        self.end: tuple[int, int] = end
+    
+    def set_player(self, player: "Player"):
+        """
+        Sets the player object in the maze.
+        """
+        self.player: "Player" = player
+
+    def set_chasers(self, chasers: list["Chaser"]):
+        """
+        Sets the chaser objects in the maze.
+        """
         self.chasers = chasers
 
     @staticmethod
-    def get_distance(y1, x1, y2, x2):
+    def get_distance(y1: int, x1: int, y2: int, x2: int):
+        """
+        Calculate the Manhattan distance between 2 points.
+        """
         return abs(y1- y2) + abs(x1 - x2)
 
     def get_neighbours(self, y, x):
+        """
+        Returns a list of valid neighbouring points from a given coordinate.
+        """
         neighbours = []
         directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
         for dy, dx in directions:
@@ -41,33 +145,54 @@ class Maze(Sprite):
         return neighbours
 
     def check_inrange(self, y, x):
+        """
+        Check whether a position is within the maze boundaries.
+        """
         return 0 <= y < self.height and 0 <= x < self.width
 
     def check_solid(self, y, x):
+        """
+        Check whether a position is solid.
+        """
         if not self.check_inrange(y, x):
             return False
         index = y * self.width + x
         return self.blocks[index].is_solid
     
     def check_route(self, y, x):
+        """
+        Check whether a position is a valid route.
+        """
         return self.check_inrange(y, x) and not self.check_solid(y, x) and not self.check_chasers(y, x)
 
     def check_player(self, y, x):
+        """
+        Check whether a position is occupied by the player.
+        """
         return (self.player.y, self.player.x) == (y, x)
 
     def check_chasers(self, y, x):
+        """
+        Check whether a position is occupied by any chaser.
+        """
         for chaser in self.chasers:
             if (y, x) == (chaser.y, chaser.x):
                 return True
         return False
 
     def check_box(self, y, x):
+        """
+        Check whether a position contains a box.
+        """
         if not self.check_inrange(y, x):
             return False
         index = y * self.width + x
         return self.blocks[index] == get_block("box")
 
     def check_box_pushable(self, y, x, dy, dx):
+        """
+        Check whether a box at the position can be pushed in the given direction.
+        """
         ny, nx = y + dy, x + dx
         return int(self.check_route(ny, nx)) # Only Push One Box
         if not self.check_inrange(ny, nx):
@@ -81,6 +206,9 @@ class Maze(Sprite):
             return 0
 
     def update_box(self, y, x, dy, dx, n):
+        """
+        Updates the position of a box after pushing.
+        """
         ny, nx = y + dy * n, x + dx * n
         index = y * self.width + x
         nindex = ny * self.width + nx
@@ -88,36 +216,88 @@ class Maze(Sprite):
         self.blocks[nindex] = get_block("box")
 
     def check_bonus(self, y, x):
+        """
+        Check whether a position contains a bonus.
+        """
         index = y * self.width + x
         return self.blocks[index] == get_block("bonus")
     
     def update_bonus(self, y, x):
+        """
+        Updates the position of a bonus after being collected.
+        """
         index = y * self.width + x
         if self.check_bonus(y, x):
             self.blocks[index] = get_block("air")
 
     def draw(self):
+        """
+        Draw the maze and its contents on the window.
+        """
         for index, block in enumerate(self.blocks):
             y, x = divmod(index, self.width)
             block.draw(self.win, y, x)
 
 
 class Player(MovableSprite):
-    def __init__(self, win, height, width, blocks, maze):
+    """
+    A movable sprite representing a player in the game.
+
+    Attributes:
+        maze:   Maze
+            The maze object that the player is on.
+        score:  int
+            The player's current score.
+        step:   int
+            The number of steps the player has taken.
+    
+    Methods:
+        check_win()
+            Checks if the player has reached the exit of the maze.
+        check_lose()
+            Checks if the player has been caught by any chaser.
+        move(dy, dx):
+            Moves the player in the given direction.
+        draw():
+            Draws the player at the coordinate on the window.
+    """
+    def __init__(
+        self, win: curses.window, height: int, width: int, 
+        blocks: list["Block"], maze: "Maze"
+    ):
         super().__init__(win, height, width, blocks)
         self.y, self.x = maze.start
-        self.maze = maze
-        self.score = 1000 # BASIC SCORE
-        self.step = 0
+        self.maze: "Maze" = maze
+        self.score: int = 1000 # BASIC SCORE
+        self.step: int = 0
 
     def check_win(self):
+        """
+        Checks if the player has reached the exit of the maze.
+        """
         return (self.y, self.x) == self.maze.end
     
     def check_lose(self):
+        """
+        Checks if the player has been caught by any chaser.
+        """
         return self.maze.check_chasers(self.y, self.x)
     
 
     def move(self, dy, dx):
+        """
+        Moves the player in the given direction.
+
+        Args:
+            dy: int
+                the change of y-coordinate.
+            dx: int
+                the change of x-coordinate.
+        
+        Returns:
+            bool
+                True if the move was successful, otherwise False.
+        """
         ny, nx = self.y + dy, self.x + dx
         if dy == dx == 0:
             return False   
@@ -139,28 +319,77 @@ class Player(MovableSprite):
         return True
         
     def draw(self):
+        """
+        Draws the player at the coordinate on the window.
+        """
         block = self.blocks[0]
         block.draw(self.win, self.y, self.x)        
 
 
 class Chaser(MovableSprite):
-    def __init__(self, win, height, width, blocks, maze, route):
+    """
+    A movable sprite representing a chaser in the game.
+    
+    Attributes:
+        maze:   Maze
+            The maze object that the player is on.
+        route:  list[tuple[int, int]]
+            The route of the chaser.
+    
+    Methods:
+        draw():
+            Draws the chaser at the coordinate on the window.
+    """
+    def __init__(
+        self, win: curses.window, height: int, width: int, 
+        blocks: list["Blocks"], maze: "Maze", 
+        route: list[tuple[int, int]]
+    ):
         super().__init__(win, height, width, blocks)
         self.maze = maze
         self.route = route
         self.y, self.x = route[0]
     
     def draw(self):
+        """
+        Draws the chaser at the coordinate on the window.
+        """
         block = self.blocks[0]
         block.draw(self.win, self.y, self.x)
 
 
 class AutoChaser(Chaser):
-    def __init__(self, win, height, width, blocks, maze, route, player):
+    def __init__(
+        self, win: curses.window, height: int, width: int, 
+        blocks: list["Blocks"], maze: "Maze", 
+        route: list[tuple[int, int]], player: "Player"
+    ):
+        """
+        A subclass of Chaser representing Chasers which can search the shortest path to player by algorithm.
+
+        Attributes:
+            player:   Player
+                The player which the chaser is chasing after.        
+        
+        Methods:
+            search():
+                Searches for the shortest path towards the player with the A* algorithm.
+            move():
+                Move the chaser along the path found by the search method,
+                if the next route is valid route and not blocked by other chasers.
+        """
         super().__init__(win, height, width, blocks, maze, route)
         self.player = player
 
     def search(self):
+        """
+        Searches for the shortest path towards the player with the A* algorithm.
+        
+        Returns:
+            list[tuple[int, int]]
+                A list of points which indicates the shortest path from the chaser to the player,
+                if no path is found, returns empty list.
+        """
         start = self.y, self.x
         end = self.player.y, self.player.x
         open_nodes = [start]
@@ -195,6 +424,11 @@ class AutoChaser(Chaser):
         return []
 
     def move(self):
+        """
+        Move the chaser along the path found by the search method,
+        if the next route is valid route and not blocked by other chasers.
+        """
+
         path = self.search()
         if len(path) < 2:
             return
@@ -208,11 +442,31 @@ class AutoChaser(Chaser):
 
 
 class FixedChaser(Chaser):
-    def __init__(self, win, height, width, blocks, maze, route):
+    """
+    A subclass of Chaser representing Chasers which follows a fixed route.
+
+    Attributes:
+        step:   int
+            The number of steps the chaser has taken.
+    
+    Methods:
+        move():
+            Move the chaser to the next route if it is valid.
+        draw():
+            Draws the chaser and the next step at the coordinate on the window.
+    """
+    def __init__(
+        self, win: curses.window, height: int, width: int, 
+        blocks: list["Blocks"], maze: "Maze", 
+        route: list[tuple[int, int]]
+    ):
         super().__init__(win, height, width, blocks, maze, route)
         self.step = 1
 
     def move(self):
+        """
+        Move the chaser to the next route if it is valid.
+        """
         ny, nx = self.route[self.step % len(self.route)]
         if not self.maze.check_route(ny, nx):
             return
@@ -222,6 +476,9 @@ class FixedChaser(Chaser):
         super().move(dy, dx)
     
     def draw(self):
+        """
+        Draws the chaser and the next step at the coordinate on the window.
+        """
         ny, nx = self.route[self.step % len(self.route)]
         if self.maze.check_route(ny, nx) and not self.maze.check_player(ny, nx):
             block = self.blocks[1]

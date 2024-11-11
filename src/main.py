@@ -8,11 +8,31 @@ import display
 
 
 def start(stdscr, displayer, menu_loader, maze_loader):
+    """
+    Initializes and starts the main menu.
+    
+    Args:
+        stdscr:         curses.window
+            The main window object from curses.
+        displayer:      Displayer
+            An object for handling the display operations.
+        menu_loader:    MenuLoader
+            An object for loading and initializing the menu assets.
+        maze_loader:    MazeLoader
+            An object for loading and initializing the maze assets.
+    
+    Returns:
+        str
+            The status of the game,
+            returns "start" for starting the game.
+    """
+
+    # Initialization
     menu_loader.set_index("start")
-    win = displayer.create_win(*menu_loader.get_basic_info())
+    win = displayer.create_win(*menu_loader.get_basics())
     displayer.erase_win(stdscr)
     displayer.erase_win(win)
-    displayer.display_start(menu_loader.get_resource_info())
+    displayer.display_menu(menu_loader.get_resources())
     
     while True:
             
@@ -25,7 +45,7 @@ def start(stdscr, displayer, menu_loader, maze_loader):
             # Start Game
             elif key == ord('t'):
                 maze_loader.set_index(0)
-                tutorial(stdscr, displayer, menu_loader)
+                tutorial(stdscr, displayer, menu_loader) # Goto the tutorial menu
                 return "start"
 
             elif ord('1') <= key <= ord('9'):
@@ -34,14 +54,32 @@ def start(stdscr, displayer, menu_loader, maze_loader):
                 return "start"
 
             # Display
-            displayer.display_start(menu_loader.get_resource_info())
+            displayer.display_menu(menu_loader.get_resources())
 
 def tutorial(stdscr, displayer, menu_loader):
+    """
+    Displays the tutorial menu.
+    
+    Args:
+        stdscr:         curses.window
+            The main window object from curses.
+        displayer:      Displayer
+            An object for handling the display operations.
+        menu_loader:    MenuLoader
+            An object for loading and initializing the menu assets.
+    
+    Returns:
+        str
+            The status of the game,
+            returns "continue" to stop displaying tutorial.
+    """
+
+    # Initialization
     menu_loader.set_index("tutorial")
-    win = displayer.create_win(*menu_loader.get_basic_info())
+    win = displayer.create_win(*menu_loader.get_basics())
     displayer.erase_win(stdscr)
     displayer.erase_win(win)
-    displayer.display_start(menu_loader.get_resource_info())
+    displayer.display_menu(menu_loader.get_resources())
 
     while True:
 
@@ -56,23 +94,47 @@ def tutorial(stdscr, displayer, menu_loader):
             return "continue"
         
         # Display
-        displayer.display_start(menu_loader.get_resource_info())
+        displayer.display_menu(menu_loader.get_resources())
 
 def game(stdscr, displayer, recorder, maze_loader):
+    """
+    Initializes and runs the tutorial menu.
+    
+    Args:
+        stdscr:         curses.window
+            The main window object from curses.
+        displayer:      Displayer
+            An object for handling the display operations.
+        recorder:       Recorder
+            An object for recording the scores and steps in the game play.
+        maze_loader:    MazeLoader
+            An object for loading and initializing the maze assets.
+    
+    Returns:
+        str
+            The status of the game,
+            returns "retry" for retrying the previous level,
+            returns "back" for going back to the start menu,
+            returns "win" if the level is cleared,
+            returns "lose" if the player is caught by the chasers.
+    """
+    
     # Sprites Initialization
-    maze_height, maze_width = maze_loader.get_basic_info()
+    maze_height, maze_width = maze_loader.get_basics()
     win = displayer.create_win(maze_height, maze_width, blocks.get_block_size())
-    maze = sprites.Maze(win, maze_height, maze_width, **maze_loader.get_resource_info())
+    maze = sprites.Maze(win, maze_height, maze_width, **maze_loader.get_resources())
     player = sprites.Player(win, maze_height, maze_width, [blocks.get_block("player")], maze)
     chasers = []
-    for name, route in maze_loader.get_route_info().items():
-        if "auto" in name:
+    for name, route in maze_loader.get_routes().items():
+        if "auto" in name: # Auto Chasers
             chasers.append(sprites.AutoChaser(win, maze_height, maze_width, [blocks.get_block("chaser")], maze, route, player))
-        else:
+        else: # Fixed Chasers
             chasers.append(sprites.FixedChaser(win, maze_height, maze_width, [blocks.get_block("chaser"), blocks.get_block("warning")], maze, route))
     maze.set_player(player)
     maze.set_chasers(chasers)
     displaying_sprites = [maze, player] + chasers
+
+    # Displayer Initialization
     displayer.erase_win(stdscr)
     displayer.erase_win(win)
     displayer.display_game(displaying_sprites)
@@ -127,13 +189,37 @@ def game(stdscr, displayer, recorder, maze_loader):
         displayer.display_game(displaying_sprites)
 
 def end(stdscr, displayer, recorder, menu_loader, maze_loader):
+    """
+    Handle and display the end menu which will display when a level is cleared or lost.
+
+    Args:
+        stdscr:         curses.window
+            The main window object from curses.
+        displayer:      Displayer
+            An object for handling the display operations.
+        recorder:       Recorder
+            An object for recording the scores and steps in the game play.
+        menu_loader:    MenuLoader
+            An object for loading and initializing the menu assets.
+        maze_loader:    MazeLoader
+            An object for loading and initializing the maze assets.
+    
+    Returns:
+        str
+            The status of the game,
+            returns "retry" for retrying the previous level,
+            returns "back" for going back to the start menu,
+            returns "continue" for going forward to the next level,
+            returns "clear" for going forward to the final menu.
+    """
+
     # End Menu
     record = recorder.get_record()
     menu_loader.set_index(record["status"])
-    win = displayer.create_win(*menu_loader.get_basic_info())
+    win = displayer.create_win(*menu_loader.get_basics())
     displayer.erase_win(stdscr)
     displayer.erase_win(win)
-    displayer.display_end(menu_loader.get_resource_info(), (record["step"], record["score"]))
+    displayer.display_menu(menu_loader.get_resources(), (record["step"], record["score"]))
 
     while True:
             
@@ -156,16 +242,35 @@ def end(stdscr, displayer, recorder, menu_loader, maze_loader):
                         return "clear"
 
             # Display
-            displayer.display_end(menu_loader.get_resource_info(), (record["step"], record["score"]))
+            displayer.display_menu(menu_loader.get_resources(), (record["step"], record["score"]))
 
 def final(stdscr, displayer, recorder, menu_loader):
+    """
+    Handle and display the final menu which will display when all levels are cleared.
+
+    Args:
+        stdscr:         curses.window
+            The main window object from curses.
+        displayer:      Displayer
+            An object for handling the display operations.
+        recorder:       Recorder
+            An object for recording the scores and steps in the game play.
+        menu_loader:    MenuLoader
+            An object for loading and initializing the menu assets.
+    
+    Returns:
+        str
+            The status of the game,
+            returns "back" for going back to the start menu,
+    """
+
     # Final Menu
     summary = recorder.summarize_recodes()
     menu_loader.set_index("final")
-    win = displayer.create_win(*menu_loader.get_basic_info())
+    win = displayer.create_win(*menu_loader.get_basics())
     displayer.erase_win(stdscr)
     displayer.erase_win(win)
-    displayer.display_end(menu_loader.get_resource_info(), summary.values())
+    displayer.display_menu(menu_loader.get_resources(), summary.values())
 
     while True:
             
@@ -179,10 +284,20 @@ def final(stdscr, displayer, recorder, menu_loader):
                 return "back"
 
             # Display
-            displayer.display_end(menu_loader.get_resource_info(), summary.values())
+            displayer.display_menu(menu_loader.get_resources(), summary.values())
 
 
 def main(stdscr):
+    """
+    The main function for the whole application,
+    which initializes loaders and loads the assets,
+    while it also controls the game progress from menu to game play.
+    
+    Args:
+        stdscr: curses.window
+            The standard screen object from curses.
+    """
+
     # Loaders Initialization
     color_loader = loaders.ColorLoader("assets/colors.json")
     block_loader = loaders.BlockLoader("assets/blocks.json")
