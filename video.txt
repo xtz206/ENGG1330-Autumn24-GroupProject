@@ -5,11 +5,12 @@ Useful tool
 Points to be menitoned 
 1 min video (trailer:hightlight the games)
   1. background i.e. Halloween theme, chasing by someone
-  2. objecive of the game 
+  2. objective of the game 
   3. little demonstrating
-  4. map function (trap, teleport)
+  4. map function (trap, teleport)(multiple functional blocks)
   5. 9 map with different experience
-
+  6. multiple ways to pass the game(earn higher scores and move less)-> challenge yourself
+  7. two kind of chasers, making the game intense
 5 mins video (demonstrating gameplay & technical implementation)
   1. 1 min demonstration
   2. 4 min technical implementation 

@@ -12,6 +12,16 @@
 # Value Setting
 Scores
 
+# Documentation
+[Completed] blocks.py
+[Completed] display.py
+[Completed] loaders.py
+[Completed] main.py
+sprites.py
+[Completed] utils.py
+
+
+
 # Miscs
 Readme
 Videos
