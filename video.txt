@@ -1,4 +1,5 @@
-suseful tool 
+
+Useful tool 
 1. https://www.text-to-speech.cn 
 #use public link for submission
 Points to be menitoned 
@@ -7,6 +8,7 @@ Points to be menitoned
   2. objecive of the game 
   3. little demonstrating
   4. map function (trap, teleport)
+  5. 9 map with different experience
 
 5 mins video (demonstrating gameplay & technical implementation)
   1. 1 min demonstration
@@ -17,4 +19,18 @@ Points to be menitoned
   -> how does the chaser 'touches' the player
   -> 
  
+ Game Trailer: (unique selling points)
+ 1. Maze Runner
+ 2. Diverse playing styles
+ 3. 10 levels to play
+ 4. compete your high scores with friends
+
+
+
+
+
+
+
+
+
 
