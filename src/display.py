@@ -63,4 +63,35 @@ class Displayer:
             text.draw(self.win)
         self.win.refresh()
 
+class Recorder:
+    def __init__(self):
+        self.records = []
+    
+    def insert_record(self, record):
+        self.records.append(record)
+    
+    def get_record(self):
+        if len(self.records) == 0:
+            return None
+        return self.records[-1]
+    
+    def summarize_recodes(self):
+        summary = {
+            "win": 0,
+            "lose": 0,
+            "step": 0,
+            "score": 0
+        }
+
+        for record in self.records:
+            status = record["status"]
+            step = record["step"]
+            score = record["score"]
+
+            summary["win"] += int(status == "win")
+            summary["lose"] += int(status == "lose")
+            summary["step"] += step
+            summary["score"] += score
+
+        return summary
 
