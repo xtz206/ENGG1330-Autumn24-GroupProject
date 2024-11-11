@@ -69,6 +69,7 @@ class Maze(Sprite):
 
     def check_box_pushable(self, y, x, dy, dx):
         ny, nx = y + dy, x + dx
+        return int(self.check_route(ny, nx)) # Only Push One Box
         if not self.check_inrange(ny, nx):
             return 0
         if self.check_route(ny, nx):
