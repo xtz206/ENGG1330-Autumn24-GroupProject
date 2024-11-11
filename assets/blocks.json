@@ -7,8 +7,7 @@
             4
         ],
         "color": 1,
-        "is_solid": false,
-        "is_pushable": false
+        "is_solid": false
     },
     "blocks": [
         {
@@ -56,8 +55,7 @@
             "name": "box",
             "char": "#",
             "color": 6,
-            "is_solid": true,
-            "is_pushable": true
+            "is_solid": true
         }
     ]
 }
