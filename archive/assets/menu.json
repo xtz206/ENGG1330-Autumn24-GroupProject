@@ -34,7 +34,7 @@
                 "align": true
             },
             {
-                "content": "--------  PRESS T For Trial  --------",
+                "content": "--------  PRESS T For Tutorial  --------",
                 "line": 8,
                 "align": true
             },
@@ -50,8 +50,173 @@
             }
         ]
     },
+    "tutorial": {
+        "height": 25,
+        "width": 60,
+        "texts": [
+            {
+                "content": "THE FOLLOWING ARE THE BLOCKS PRESENTED IN THE MAZES",
+                "line": 1,
+                "align": true
+            },
+            {
+                "content": " ",
+                "line": 2,
+                "indent": 4,
+                "color": 1
+            },
+            {
+                "content": "AIR: Can Go There",
+                "line": 2,
+                "indent": 8
+            },
+            {
+                "content": "#",
+                "line": 3,
+                "indent": 4,
+                "color": 2
+            },
+            {
+                "content": "WALL: Can't Go There",
+                "line": 3,
+                "indent": 8
+            },
+            {
+                "content": "@",
+                "line": 4,
+                "indent": 4,
+                "color": 3
+            },
+            {
+                "content": "THE PLAYER: Controlled by WASD",
+                "line": 4,
+                "indent": 8
+            },
+            {
+                "content": " ",
+                "line": 5,
+                "indent": 4,
+                "color": 3
+            },
+            {
+                "content": "THE START",
+                "line": 5,
+                "indent": 8
+            },
+            {
+                "content": "E",
+                "line": 6,
+                "indent": 4,
+                "color": 3
+            },
+            {
+                "content": "EXIT OF THE MAZE",
+                "line": 6,
+                "indent": 8
+            },
+            {
+                "content": "$",
+                "line": 7,
+                "indent": 4,
+                "color": 3
+            },
+            {
+                "content": "!BONUS SCORES!: Get More to Score Higher",
+                "line": 7,
+                "indent": 8
+            },
+            {
+                "content": "G",
+                "line": 8,
+                "indent": 4,
+                "color": 4
+            },
+            {
+                "content": "GRIEVER: Will Chase You !Dont Get Caught!",
+                "line": 8,
+                "indent": 8
+            },
+            {
+                "content": " ",
+                "line": 9,
+                "indent": 4,
+                "color": 5
+            },
+            {
+                "content": "PATH OF GRIEVER",
+                "line": 9,
+                "indent": 8
+            },
+            {
+                "content": "!Only GREIVERS with FIXED routes show their paths",
+                "line": 10,
+                "indent": 9
+            },
+            {
+                "content": "#",
+                "line": 11,
+                "indent": 4,
+                "color": 6
+            },
+            {
+                "content": "PUSHABLE BLOCK",
+                "line": 11,
+                "indent": 8
+            },
+            {
+                "content": "In each maze:",
+                "line": 12,
+                "indent": 4
+            },
+            {
+                "content": "Press R to Retry",
+                "line": 13,
+                "indent": 8
+            },
+            {
+                "content": "Press Q to Quit",
+                "line": 14,
+                "indent": 8
+            },
+            {
+                "content": "Press M to Back to Menu",
+                "line": 15,
+                "indent": 8
+            },
+            {
+                "content": "Still feel confused?",
+                "line": 17,
+                "align": true
+            },
+            {
+                "content": "No worries! Check the README.txt",
+                "line": 18,
+                "align": true
+            },
+            {
+                "content": "OR",
+                "line": 20,
+                "align": true
+            },
+            {
+                "content": "Explore the rule as you play!",
+                "line": 22,
+                "align": true
+            },
+            {
+                "content": "Good luck escaping...",
+                "line": 23,
+                "align": true
+            },
+            {
+                "content": "PRESS C to Continue",
+                "line": 25,
+                "align": true
+            }
+        ]
+    },
     "win": {
-        "height": 10,
+        "height": 15,
         "width": 40,
         "texts": [
             {
@@ -81,15 +246,20 @@
                 "line": 10,
                 "align": true
             },
+             {
+                "content": "PRESS M To Back to Menu",
+                "line": 11,
+                "align": true
+            },
             {
                 "content": "PRESS Q To Quit ↩",
-                "line": 11,
+                "line": 12,
                 "align": true
             }
         ]
     },
     "lose": {
-        "height": 10,
+        "height": 15,
         "width": 40,
         "texts": [
             {
@@ -103,8 +273,58 @@
                 "align": true
             },
             {
-                "content": "PRESS Q To Quit ↩",
+                "content": "PRESS M To Back to Menu",
                 "line": 9,
+                "align": true
+            },
+            {
+                "content": "PRESS Q To Quit ↩",
+                "line": 10,
+                "align": true
+            }
+        ]
+    },
+    "final": {
+        "height": 10,
+        "width": 50,
+        "texts": [
+            {
+                "content": "ツ CONGRATS YOU HAVE ESCAPED FROM ALL THE MAZES ツ",
+                "line": 4,
+                "align": true
+            },
+            {
+                "content": "✩✩✩ YOU WON %d TIMES ✩✩✩",
+                "line": 5,
+                "align": true,
+                "variable": true
+            },
+            {
+                "content": " ✩✩ YOU LOST %d TIMES ✩✩ ",
+                "line": 6,
+                "align": true,
+                "variable": true
+            },
+            {
+                "content": " ✩✩ YOU USED %d STEPS IN TOTAL ✩✩ ",
+                "line": 7,
+                "align": true,
+                "variable": true
+            },
+            {
+                "content": "✩✩✩ YOU GOT %d SCORES IN TOTAL ✩✩✩",
+                "line": 8,
+                "align": true,
+                "variable": true
+            },
+            {
+                "content": "PRESS M To Start Menu ⟳",
+                "line": 10,
+                "align": true
+            },
+            {
+                "content": "PRESS Q To Quit ↩",
+                "line": 11,
                 "align": true
             }
         ]
