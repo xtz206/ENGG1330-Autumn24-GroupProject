@@ -51,7 +51,7 @@
         ]
     },
     "tutorial": {
-        "height": 20,
+        "height": 25,
         "width": 60,
         "texts": [
             {
@@ -184,18 +184,33 @@
                 "indent": 8
             },
             {
-                "content": "Explore the rule as you play!",
+                "content": "Still feel confused?",
                 "line": 17,
                 "align": true
             },
             {
-                "content": "Good luck escaping...",
+                "content": "No worries! Check the README.txt",
                 "line": 18,
                 "align": true
             },
             {
+                "content": "OR",
+                "line": 20,
+                "align": true
+            },
+            {
+                "content": "Explore the rule as you play!",
+                "line": 22,
+                "align": true
+            },
+            {
+                "content": "Good luck escaping...",
+                "line": 23,
+                "align": true
+            },
+            {
                 "content": "PRESS C to Continue",
-                "line": 19,
+                "line": 25,
                 "align": true
             }
         ]
