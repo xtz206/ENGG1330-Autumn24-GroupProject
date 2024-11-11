@@ -7,7 +7,7 @@ import loaders
 import display
 
 
-def start(stdscr, displayer, menu_loader):
+def start(stdscr, displayer, menu_loader, maze_loader):
     menu_loader.set_index("start")
     win = displayer.create_win(*menu_loader.get_basic_info())
     displayer.erase_win(stdscr)
@@ -18,25 +18,48 @@ def start(stdscr, displayer, menu_loader):
             
             # Keyboard Input
             key = stdscr.getch()
-
             # Exit Game
             if key == ord('q'):
                 sys.exit()
             
             # Start Game
             elif key == ord('t'):
-                return 0
-            
+                maze_loader.set_index(0)
+                tutorial(stdscr, displayer, menu_loader)
+                return "start"
+
             elif ord('1') <= key <= ord('9'):
                 maze_index = int(chr(key))
-                return maze_index
+                maze_loader.set_index(maze_index)
+                return "start"
 
             # Display
             displayer.display_start(menu_loader.get_resource_info())
 
-def game(stdscr, displayer, maze_loader, maze_index):
+def tutorial(stdscr, displayer, menu_loader):
+    menu_loader.set_index("tutorial")
+    win = displayer.create_win(*menu_loader.get_basic_info())
+    displayer.erase_win(stdscr)
+    displayer.erase_win(win)
+    displayer.display_start(menu_loader.get_resource_info())
+
+    while True:
+
+        # Keyboard Input
+        key = stdscr.getch()
+
+        # Exit Game
+        if key == ord('q'):
+            sys.exit()
+        
+        elif key == ord('c'):
+            return "continue"
+        
+        # Display
+        displayer.display_start(menu_loader.get_resource_info())
+
+def game(stdscr, displayer, recorder, maze_loader):
     # Sprites Initialization
-    maze_loader.set_index(maze_index)
     maze_height, maze_width = maze_loader.get_basic_info()
     win = displayer.create_win(maze_height, maze_width, blocks.get_block_size())
     maze = sprites.Maze(win, maze_height, maze_width, **maze_loader.get_resource_info())
@@ -61,10 +84,10 @@ def game(stdscr, displayer, maze_loader, maze_index):
         key = stdscr.getch()
         if key == ord('q'):
             sys.exit()
+        elif key == ord('m'):
+            return "back"
         elif key == ord('r'):
-            return {
-                "status": "retry",
-            }
+            return "retry"
         elif key == ord('w'):
             player_dy, player_dx = -1, 0
         elif key == ord('s'):
@@ -83,29 +106,34 @@ def game(stdscr, displayer, maze_loader, maze_index):
         
         # Check
         if player.check_win():
-            return {
+            record = {
                 "status": "win",
                 "step": player.step,
                 "score": player.score
             }
+            recorder.insert_record(record)
+            return "win"
         
         elif player.check_lose():
-            return {
+            record = {
                 "status": "lose",
                 "step": player.step,
-                "score": player.score
+                "score": 0
             }
+            recorder.insert_record(record)
+            return "lose"
 
         # Display
         displayer.display_game(displaying_sprites)
 
-def end(stdscr, displayer, menu_loader, results):
+def end(stdscr, displayer, recorder, menu_loader, maze_loader):
     # End Menu
-    menu_loader.set_index(results["status"])
+    record = recorder.get_record()
+    menu_loader.set_index(record["status"])
     win = displayer.create_win(*menu_loader.get_basic_info())
     displayer.erase_win(stdscr)
     displayer.erase_win(win)
-    displayer.display_end(menu_loader.get_resource_info(), (results["step"], results["score"]))
+    displayer.display_end(menu_loader.get_resource_info(), (record["step"], record["score"]))
 
     while True:
             
@@ -116,16 +144,43 @@ def end(stdscr, displayer, menu_loader, results):
             if key == ord('q'):
                 sys.exit()
             elif key == ord('r'):
-                return {
-                    "status": "retry",
-                }
-            elif key == ord('c'):
-                if results["status"] == "win":
-                    return {
-                        "status": "continue"
-                    }
+                return "retry"
+            elif key == ord('m'):
+                return "back"
+
+            elif key == ord('c') and record["status"] == "win":
+                    if maze_loader.index + 1 < maze_loader.get_maze_nums():
+                        maze_loader.set_index(maze_loader.index + 1)
+                        return "continue"
+                    else:
+                        return "clear"
+
             # Display
-            displayer.display_end(menu_loader.get_resource_info(), (results["step"], results["score"]))
+            displayer.display_end(menu_loader.get_resource_info(), (record["step"], record["score"]))
+
+def final(stdscr, displayer, recorder, menu_loader):
+    # Final Menu
+    summary = recorder.summarize_recodes()
+    menu_loader.set_index("final")
+    win = displayer.create_win(*menu_loader.get_basic_info())
+    displayer.erase_win(stdscr)
+    displayer.erase_win(win)
+    displayer.display_end(menu_loader.get_resource_info(), summary.values())
+
+    while True:
+            
+            # Keyboard Input
+            key = stdscr.getch()
+
+            # Exit Game
+            if key == ord('q'):
+                sys.exit()
+            elif key == ord('m'):
+                return "back"
+
+            # Display
+            displayer.display_end(menu_loader.get_resource_info(), summary.values())
+
 
 def main(stdscr):
     # Loaders Initialization
@@ -134,34 +189,32 @@ def main(stdscr):
     maze_loader = loaders.MazeLoader("assets/mazes.json")
     menu_loader = loaders.MenuLoader("assets/menu.json")
 
-    # Assets Initialization
+    # Assets Load
     color_loader.load()
     block_loader.load()
     maze_loader.load()
     menu_loader.load()
 
-    # Displayer Initialization
+    # Displayer and Recorder Initialization
     displayer = display.Displayer(stdscr)
+    recorder = display.Recorder()
     curses.curs_set(0)
     displayer.erase_win(stdscr)
     stdscr.refresh()
 
-    maze_index = start(stdscr, displayer, menu_loader)
-    
-    while True:
-        results = game(stdscr, displayer, maze_loader, maze_index)
-        if results["status"] == "retry":
-            continue
+    status = "start"
+    while status == "start" or status == "back":
+        status = start(stdscr, displayer, menu_loader, maze_loader)
+
+        while status == "retry" or status == "continue" or status == "start":
+            status = game(stdscr, displayer, recorder, maze_loader)
         
-        results = end(stdscr, displayer, menu_loader, results)
-        if results["status"] == "retry":
-            continue
-        elif results["status"] == "continue" and maze_index < maze_loader.get_maze_nums():
-            maze_index += 1
-            continue
-        else:
-            sys.exit()
-        
+            if status == "win" or status == "lose":
+                status = end(stdscr, displayer, recorder, menu_loader, maze_loader)
+            
+        if status == "clear":
+            status = final(stdscr, displayer, recorder, menu_loader)
+      
 
 curses.wrapper(main)
 
