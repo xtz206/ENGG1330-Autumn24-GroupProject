@@ -1,0 +1,35 @@
+In the main.py,
+
+We defined several functions to handle the different section of the game, including the menus and the game level.
+And these functions will return the status string, which indicates what is the next section to enter.
+
+Then, the main function handle the initialization progress and create loaders, displayer and the recorder to be used in the gameplay.
+
+Finally, We used the wrapper from curses to handle the resume the terminal state in case of exceptions.
+
+
+In the sprites.py
+
+We defined several classes representing the sprites in the game play, including player, chaser and maze.
+Through this, we can bind all the methods related to the object together, making it more clear to understand.
+And all the Sprite class implement the draw() interface, so that we can use the same name to draw different kinds of sprite.
+ven coordinate.
+
+
+In  the blocks.py
+
+We defined the Block Class which deal with how to display the block and check its attributes.
+There are also two useful function when we want to transform the block from maze coordinate to window coordinate.
+
+In the display.py
+
+Firstly, we defined the Displayer Class to deal with the displaying operations.
+Moreover, we defined the Recorder Class to record the data generated in the game play, including scores and steps, so that it can be displayed in the final menu.
+To display the texts in the menu, we defined the Text class so that we can set and get their attributes more easily.
+
+
+In the loaders.py
+
+We defined various loaders which handles all the assets loading work, so that we can use the assets more easily instead of caring how to load it in the main game loop.
+Moreover, some initialization work can also be done here.
+
