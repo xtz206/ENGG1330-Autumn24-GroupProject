@@ -1,15 +1,31 @@
 HOW TO RUN THE GAME
 
-1. Open your terminal.
-2. Make sure the size of the terminator's window is the maxnium, otherwise an error may occur.
-3. Input python ./src/main.py in your terminal.
-4. Press enter and enjoy.
+1. Open ed and upload MazeRunner.zip to workspace, ed will ask you to unzip the file, unzip it.
+2. Make sure your file structure is:
+    main/
+        ├── assets/
+        │   ├── blocks.json
+        │   ├── colors.json
+        │   ├── mazes.json
+        │   └── menu.json
+        └── src/
+            ├── blocks.py
+            ├── display.py
+            ├── loaders.py
+            ├── main.py
+            ├── sprites.py
+            └── utils.py
+3. Open your terminal.
+4. Make sure the size of the terminator's window is the maxnium, otherwise an error may occur.
+5. Input python ./src/main.py in your terminal.
+6. Press enter and enjoy.
 
 **Please do NOT change the size of your window during the game, otherwise an error may occur.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
 INSTRUCTION OF THE GAME
+
 *You can view the instruction by pressing 't' in the menu, but here we provide a more detailed illustration in case of any problem.
 
 1. Solid_Blocks
@@ -18,7 +34,7 @@ INSTRUCTION OF THE GAME
         Player is the only object you may control in the game.
 
         Player will be showcased as a green block with an '@'.
-        
+        m
         Player can interact with the following blocks:
             Box, Bonus, Chaser, Exit, Fixed_chaser
         
