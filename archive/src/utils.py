@@ -2,10 +2,26 @@ import json
 import sys
 
 def log_to_file(*msgs, sep=" ", end="\n"):
+    """
+    Logs the msgs to the specific file.
+    
+    Args:
+        msgs: list[Any]
+            The messages to be logged in the file.
+        sep: str, optional
+            The seperation string to join the messages together (default is " ").
+        end: str, optional
+            The end string to be logged at the end of the messages (default is "\n").
+    """
+
     with open("./logs.txt", 'a') as f:
         f.write(sep.join([format(msg) for msg in msgs]) + end)
 
 def json_format(path):
+    """
+    Format the JSON file by the given path.
+    """
+
     with open(path, 'r') as f:
         data = json.load(f)
     if data is None:
@@ -17,6 +33,10 @@ def json_format(path):
         print("Formatting Successful")
 
 def check_maze(maze):
+    """
+    Check whether the maze is valid, and returns its problems and positions.
+    """
+
     height = maze["height"]
     width = maze["width"]
     start = maze["start"]
@@ -48,6 +68,10 @@ def check_maze(maze):
     return True, None, None
 
 def check_mazes(path):
+    """
+    Check the mazes in the file given by the path.
+    """
+
     with open(path, 'r') as f:
         data = json.load(f)
     count = 0
@@ -62,6 +86,9 @@ def check_mazes(path):
         print("All Mazes Pass the Checks")
 
 def print_helps():
+    """
+    Print the helps of the program.
+    """
 
     print("Usage: python utils.py [OPTIONS] [PATH]")
     print("Options: ")
