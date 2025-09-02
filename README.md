@@ -10,4 +10,4 @@
 If you want to play the game, you may clone the repository and run it with python.
 Please read the `README.txt` before running the game, as the instructions are provided there.
 
-Thanks to @ZOT-217 for his contribution in documenting the code and designing parts of the mazes.
+Thanks to [@ZOT-217](https://github.com/ZOT-217) for his contribution in documenting the code and designing parts of the mazes.
